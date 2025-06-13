@@ -5,6 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rakib Raihan - Premium Digital Products</title>
     
+    <!-- Firebase Configuration -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            updateProfile,
+            GoogleAuthProvider,
+            signInWithPopup
+        } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCndBh3s0Binb5k6eJNk9WEGo7FbGzwxdY",
+            authDomain: "rakib-raihan.firebaseapp.com",
+            projectId: "rakib-raihan",
+            storageBucket: "rakib-raihan.firebasestorage.app",
+            messagingSenderId: "348348178384",
+            appId: "1:348348178384:web:7af06dfcad47bbd27723d5",
+            measurementId: "G-R5DP5KC0GW"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // Make auth available globally
+        window.auth = auth;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.updateProfile = updateProfile;
+        window.googleProvider = googleProvider;
+        window.signInWithPopup = signInWithPopup;
+    </script>
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -181,6 +222,200 @@
             width: 100%;
             text-align: center;
         }
+
+        /* Sign Up Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            position: relative;
+            background: #1a2234;
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        .success-message {
+            color: #10b981;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Google Sign In Button Styles */
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: white;
+            color: #333;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .google-btn:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
+        }
+        
+        .google-btn img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #6b7280;
+            margin: 1.5rem 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        /* Enhanced Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            .hero-section p {
+                font-size: 1rem;
+            }
+            
+            .product-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .testimonial-card {
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        /* Modal Responsive Styles */
+        @media (max-width: 640px) {
+            .modal-content {
+                width: 95%;
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+            
+            .form-input {
+                padding: 0.625rem 0.875rem;
+            }
+            
+            .google-btn {
+                padding: 0.625rem 0.875rem;
+            }
+            
+            .divider {
+                margin: 1rem 0;
+            }
+        }
+        
+        /* Header Responsive Styles */
+        @media (max-width: 1024px) {
+            .nav-link {
+                padding: 0.5rem 0.75rem;
+            }
+            
+            .signup-btn, .login-btn {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        /* Product Grid Responsive */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        /* Testimonial Grid Responsive */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        /* Newsletter Section Responsive */
+        @media (max-width: 640px) {
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* Footer Responsive */
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -192,15 +427,15 @@
                 <a href="#" id="home-link" class="text-3xl font-bold font-heading gradient-text hover:opacity-90 transition">Rakib Raihan</a>
                 
                 <nav class="hidden lg:flex items-center space-x-8">
-                    <a href="#home" class="nav-link text-base font-medium text-slate-300 hover:text-white">হোম</a>
-                    <a href="#products" class="nav-link text-base font-medium text-slate-300 hover:text-white">প্রোডাক্টস</a>
-                    <a href="#testimonials" class="nav-link text-base font-medium text-slate-300 hover:text-white">প্রশংসা</a>
+                    <a href="#home" class="nav-link text-base font-medium text-slate-300 hover:text-white">Home</a>
+                    <a href="#products" class="nav-link text-base font-medium text-slate-300 hover:text-white">Products</a>
+                    <a href="#testimonials" class="nav-link text-base font-medium text-slate-300 hover:text-white">Testimonials</a>
                 </nav>
 
                 <div class="flex items-center space-x-6">
                     <div class="hidden lg:flex items-center space-x-6">
-                        <a href="#" class="login-btn text-base font-medium text-slate-300 hover:text-white rounded-lg">লগইন</a>
-                        <a href="#" class="signup-btn text-white text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">সাইন আপ</a>
+                        <a href="#" class="login-btn text-base font-medium text-slate-300 hover:text-white rounded-lg">Login</a>
+                        <a href="#" class="signup-btn text-white text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">Sign Up</a>
                     </div>
                     <a href="#" title="My Profile" class="pl-2">
                         <img src="https://i.pravatar.cc/48?u=rakib" class="profile-img rounded-full border-2 border-slate-600 hover:border-sky-400">
@@ -215,12 +450,12 @@
         </div>
         <!-- মোবাইল মেনু -->
         <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 absolute w-full shadow-lg">
-            <a href="#home" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">হোম</a>
-            <a href="#products" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">প্রোডাক্টস</a>
-            <a href="#testimonials" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">প্রশংসা</a>
+            <a href="#home" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">Home</a>
+            <a href="#products" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">Products</a>
+            <a href="#testimonials" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">Testimonials</a>
             <div class="border-t border-slate-800 p-6 space-y-4">
-                <a href="#" class="mobile-menu-btn block text-center text-base font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600 transition-colors">লগইন</a>
-                <a href="#" class="mobile-menu-btn block text-center signup-btn text-white text-base font-semibold py-3 rounded-lg">সাইন আপ</a>
+                <a href="#" class="mobile-menu-btn block text-center text-base font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600 transition-colors">Login</a>
+                <a href="#" class="mobile-menu-btn block text-center signup-btn text-white text-base font-semibold py-3 rounded-lg">Sign Up</a>
             </div>
         </div>
     </header>
@@ -229,30 +464,32 @@
         <!-- ===== হোম পেজ কন্টেন্ট ===== -->
         <div id="homePage">
             <!-- হিরো সেকশন -->
-            <section id="home" class="relative py-24 md:py-32 text-center overflow-hidden hero-pattern">
+            <section id="home" class="relative py-16 md:py-24 lg:py-32 text-center overflow-hidden hero-pattern">
                 <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
                     <div data-aos="fade-up" data-aos-duration="1000">
-                        <h1 class="font-heading text-4xl md:text-6xl font-extrabold text-white leading-tight">
+                        <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
                             Ideas to Reality with <span class="gradient-text">Digital Tools</span>
                         </h1>
-                        <p class="mt-6 max-w-2xl mx-auto text-lg text-slate-400">আপনার প্রজেক্টের জন্য প্রয়োজনীয় প্রিমিয়াম ডিজিটাল প্রোডাক্টস, যা আপনার কাজকে করবে আরও সহজ ও আকর্ষণীয়।</p>
-                        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="#products" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg shadow-lg">প্রোডাক্টগুলো দেখুন</a>
-                            <a href="#contact" class="bg-slate-700/50 text-white font-semibold py-3 px-8 rounded-lg hover:bg-slate-700 transition">যোগাযোগ করুন</a>
+                        <p class="mt-4 sm:mt-6 max-w-2xl mx-auto text-base sm:text-lg text-slate-400">
+                            আপনার প্রজেক্টের জন্য প্রয়োজনীয় প্রিমিয়াম ডিজিটাল প্রোডাক্টস, যা আপনার কাজকে করবে আরও সহজ ও আকর্ষণীয়।
+                        </p>
+                        <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="#products" class="btn-primary text-white font-semibold py-3 px-6 sm:px-8 rounded-lg shadow-lg text-sm sm:text-base">প্রোডাক্টগুলো দেখুন</a>
+                            <a href="#contact" class="bg-slate-700/50 text-white font-semibold py-3 px-6 sm:px-8 rounded-lg hover:bg-slate-700 transition text-sm sm:text-base">যোগাযোগ করুন</a>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- প্রোডাক্টস সেকশন -->
-            <section id="products" class="py-20">
+            <section id="products" class="py-16 sm:py-20">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center mb-16">
-                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white">Featured Products</h2>
+                    <div class="text-center mb-12 sm:mb-16">
+                        <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white">Featured Products</h2>
                         <p class="mt-4 text-slate-400">আমাদের精心ভাবে তৈরি করা সেরা কিছু প্রোডাক্ট।</p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="product-grid">
                         <!-- প্রোডাক্ট কার্ড (এখানে data-* attribute ব্যবহার করে প্রোডাক্টের তথ্য দেওয়া হয়েছে) -->
                         <a href="#" class="product-card glass-card rounded-xl p-6 block" 
                             data-title="প্রোফেশনাল UI কিট" 
@@ -306,12 +543,12 @@
             </section>
             
              <!-- Testimonials Section -->
-            <section id="testimonials" class="py-20">
+            <section id="testimonials" class="py-16 sm:py-20">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center mb-16">
-                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white">What Our Clients Say</h2>
+                    <div class="text-center mb-12 sm:mb-16">
+                        <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white">What Our Clients Say</h2>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="testimonial-grid">
                         <div class="glass-card p-8 rounded-xl">
                             <p class="text-slate-300 italic">"Rakib Raihan-এর ডিজিটাল প্রোডাক্টগুলো আমার কাজের গতি অনেক বাড়িয়ে দিয়েছে। UI কিটটি অসাধারণ ছিল!"</p>
                             <div class="flex items-center mt-6">
@@ -383,14 +620,14 @@
         </div>
 
         <!-- Newsletter Section -->
-        <section class="py-20 bg-slate-900/50">
+        <section class="py-16 sm:py-20 bg-slate-900/50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-2xl mx-auto text-center" data-aos="fade-up">
-                    <h2 class="font-heading text-3xl font-bold text-white mb-4">Stay Updated</h2>
+                    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-white mb-4">Stay Updated</h2>
                     <p class="text-slate-400 mb-8">নতুন প্রোডাক্ট এবং অফার সম্পর্কে জানতে আমাদের নিউজলেটারে সাবস্ক্রাইব করুন।</p>
-                    <form class="flex flex-col sm:flex-row gap-4">
+                    <form class="newsletter-form flex flex-col sm:flex-row gap-4">
                         <input type="email" placeholder="আপনার ইমেইল" class="newsletter-input flex-grow px-4 py-3 rounded-lg text-white focus:outline-none">
-                        <button type="submit" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg">সাবস্ক্রাইব</button>
+                        <button type="submit" class="btn-primary text-white font-semibold py-3 px-6 sm:px-8 rounded-lg text-sm sm:text-base">সাবস্ক্রাইব</button>
                     </form>
                 </div>
             </div>
@@ -398,9 +635,9 @@
     </main>
 
     <!-- ===== ফুটার ===== -->
-    <footer class="bg-slate-900/80 border-t border-slate-800 mt-20">
+    <footer class="bg-slate-900/80 border-t border-slate-800 mt-16 sm:mt-20">
         <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="footer-grid grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold font-heading gradient-text mb-4">Rakib Raihan</h3>
                     <p class="text-slate-400">প্রিমিয়াম ডিজিটাল প্রোডাক্টস এবং সেবা প্রদানকারী।</p>
@@ -458,6 +695,50 @@
     <a href="#" class="floating-btn bg-sky-600 text-white p-4 rounded-full shadow-lg hover:bg-sky-500 transition">
         <i data-feather="arrow-up" class="w-6 h-6"></i>
     </a>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <button id="closeSignupModal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-6">Create Account</h2>
+            
+            <!-- Google Sign In Button -->
+            <button id="googleSignIn" class="google-btn mb-6">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                Continue with Google
+            </button>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <form id="signupForm" class="space-y-4">
+                <div>
+                    <input type="text" id="displayName" class="form-input" placeholder="Full Name" required>
+                </div>
+                <div>
+                    <input type="email" id="email" class="form-input" placeholder="Email Address" required>
+                </div>
+                <div>
+                    <input type="password" id="password" class="form-input" placeholder="Password" required minlength="6">
+                </div>
+                <div>
+                    <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm Password" required minlength="6">
+                </div>
+                <div id="errorMessage" class="error-message hidden"></div>
+                <div id="successMessage" class="success-message hidden"></div>
+                <button type="submit" class="w-full btn-primary text-white font-semibold py-3 px-8 rounded-lg">
+                    Create Account
+                </button>
+            </form>
+            <p class="mt-4 text-center text-slate-400">
+                Already have an account? 
+                <a href="#" class="text-sky-400 hover:text-sky-300" id="showLoginLink">Login</a>
+            </p>
+        </div>
+    </div>
 
     <!-- ===== JavaScript Section ===== -->
     <script>
@@ -583,6 +864,127 @@
             // Add your newsletter subscription logic here
             alert('Thank you for subscribing!');
             e.target.reset();
+        });
+
+        // Sign Up Modal Functionality
+        const signupModal = document.getElementById('signupModal');
+        const signupForm = document.getElementById('signupForm');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const signupLinks = document.querySelectorAll('.signup-btn');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        // Show modal when clicking sign up buttons
+        signupLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal
+        closeSignupModal.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === signupModal) {
+                signupModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Handle form submission
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const displayName = document.getElementById('displayName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Reset messages
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match';
+                errorMessage.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                // Create user
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Update profile
+                await updateProfile(user, {
+                    displayName: displayName
+                });
+
+                // Show success message
+                successMessage.textContent = 'Account created successfully!';
+                successMessage.classList.remove('hidden');
+
+                // Clear form
+                signupForm.reset();
+
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    signupModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 2000);
+
+            } catch (error) {
+                // Handle errors
+                let errorMsg = 'An error occurred during sign up';
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMsg = 'This email is already registered';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMsg = 'Password should be at least 6 characters';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMsg = 'Invalid email address';
+                }
+                
+                errorMessage.textContent = errorMsg;
+                errorMessage.classList.remove('hidden');
+            }
+        });
+
+        // Google Sign In
+        const googleSignInBtn = document.getElementById('googleSignIn');
+        
+        googleSignInBtn.addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+                
+                // Show success message
+                successMessage.textContent = 'Successfully signed in with Google!';
+                successMessage.classList.remove('hidden');
+                
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    signupModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 2000);
+                
+            } catch (error) {
+                let errorMsg = 'An error occurred during Google sign in';
+                if (error.code === 'auth/popup-closed-by-user') {
+                    errorMsg = 'Sign in was cancelled';
+                } else if (error.code === 'auth/popup-blocked') {
+                    errorMsg = 'Pop-up was blocked by the browser';
+                }
+                
+                errorMessage.textContent = errorMsg;
+                errorMessage.classList.remove('hidden');
+            }
         });
     </script>
 
