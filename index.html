@@ -59,21 +59,59 @@
         window.onValue = onValue;
         window.push = push;
 
+        // Verify database connection
+        const verifyDatabaseConnection = async () => {
+            try {
+                const testRef = ref(database, 'test');
+                await set(testRef, {
+                    timestamp: new Date().toISOString(),
+                    message: 'Test connection'
+                });
+                console.log('✅ Database connection verified');
+                return true;
+            } catch (error) {
+                console.error('❌ Database connection failed:', error);
+                return false;
+            }
+        };
+
+        // Initialize database and verify connection
+        verifyDatabaseConnection().then(isConnected => {
+            if (!isConnected) {
+                console.error('Database connection failed. Please check your Firebase configuration.');
+            }
+        });
+
         // User behavior tracking functions
-        const trackUserBehavior = (userId, action, details = {}) => {
-            if (!userId) return;
-            
-            const behaviorRef = ref(database, `userBehavior/${userId}`);
-            const newBehaviorRef = push(behaviorRef);
-            
-            set(newBehaviorRef, {
-                action,
-                timestamp: new Date().toISOString(),
-                details,
-                userAgent: navigator.userAgent,
-                screenSize: `${window.innerWidth}x${window.innerHeight}`,
-                ...details
-            });
+        const trackUserBehavior = async (userId, action, details = {}) => {
+            if (!userId) {
+                console.log('❌ No user ID available for tracking');
+                return;
+            }
+
+            if (!database) {
+                console.error('❌ Database not initialized');
+                return;
+            }
+
+            console.log('📝 Tracking behavior:', { userId, action, details });
+
+            try {
+                const behaviorRef = ref(database, `userBehavior/${userId}`);
+                const newBehaviorRef = push(behaviorRef);
+                
+                await set(newBehaviorRef, {
+                    action,
+                    timestamp: new Date().toISOString(),
+                    details,
+                    userAgent: navigator.userAgent,
+                    screenSize: `${window.innerWidth}x${window.innerHeight}`,
+                    ...details
+                });
+                console.log('✅ Successfully tracked behavior:', action);
+            } catch (error) {
+                console.error('❌ Error tracking behavior:', error);
+            }
         };
 
         // Track page views
@@ -86,6 +124,7 @@
 
         // Track product views
         const trackProductView = (userId, productId, productName) => {
+            console.log('📦 Product clicked:', { userId, productId, productName });
             trackUserBehavior(userId, 'product_view', {
                 productId,
                 productName
@@ -94,6 +133,7 @@
 
         // Track button clicks
         const trackButtonClick = (userId, buttonId, buttonText) => {
+            console.log('🔘 Button clicked:', { userId, buttonId, buttonText });
             trackUserBehavior(userId, 'button_click', {
                 buttonId,
                 buttonText
@@ -118,40 +158,90 @@
             });
         };
 
-        // Add event listeners for tracking
-        document.addEventListener('click', (e) => {
-            const user = auth.currentUser;
-            if (!user) return;
+        // Listen for auth state changes
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                console.log('👤 User is signed in:', user);
+                
+                try {
+                    // Create/Update user data in database
+                    const userRef = ref(database, 'users/' + user.uid);
+                    await set(userRef, {
+                        email: user.email,
+                        displayName: user.displayName,
+                        lastLogin: new Date().toISOString(),
+                        photoURL: user.photoURL,
+                        lastUpdated: new Date().toISOString()
+                    });
+                    console.log('✅ User data saved successfully');
 
-            // Track button clicks
-            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
-                trackButtonClick(user.uid, button.id, button.textContent.trim());
-            }
-
-            // Track product clicks
-            if (e.target.closest('.product-card')) {
-                const productCard = e.target.closest('.product-card');
-                const productId = productCard.dataset.title;
-                const productName = productCard.querySelector('h3').textContent;
-                trackProductView(user.uid, productId, productName);
+                    // Track initial page view
+                    await trackUserBehavior(user.uid, 'page_view', {
+                        page: window.location.pathname,
+                        referrer: document.referrer
+                    });
+                    
+                    // Hide login/signup buttons
+                    document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
+                        btn.style.display = 'none';
+                    });
+                    // Show sign out button
+                    document.getElementById('signOutBtn').classList.remove('hidden');
+                    document.getElementById('mobileSignOutBtn').classList.remove('hidden');
+                    // Show admin button
+                    document.getElementById('adminBtn').classList.remove('hidden');
+                } catch (error) {
+                    console.error('❌ Error saving user data:', error);
+                }
+            } else {
+                console.log('👤 User is signed out');
+                // Show login/signup buttons
+                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
+                    btn.style.display = 'block';
+                });
+                // Hide sign out button
+                document.getElementById('signOutBtn').classList.add('hidden');
+                document.getElementById('mobileSignOutBtn').classList.add('hidden');
+                // Hide admin button
+                document.getElementById('adminBtn').classList.add('hidden');
             }
         });
 
-        // Track form submissions
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', (e) => {
-                const user = auth.currentUser;
-                if (!user) return;
+        // Add event listeners for tracking
+        document.addEventListener('click', async (e) => {
+            const user = auth.currentUser;
+            if (!user) {
+                console.log('❌ No user logged in for tracking');
+                return;
+            }
 
-                const formData = new FormData(form);
-                const formDataObj = {};
-                formData.forEach((value, key) => {
-                    formDataObj[key] = value;
-                });
+            console.log('🖱️ Click event detected:', e.target);
 
-                trackFormSubmission(user.uid, form.id, formDataObj);
-            });
+            try {
+                // Track button clicks
+                if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                    const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
+                    console.log('🔘 Button clicked:', button);
+                    await trackUserBehavior(user.uid, 'button_click', {
+                        buttonId: button.id || 'unnamed-button',
+                        buttonText: button.textContent.trim()
+                    });
+                }
+
+                // Track product clicks
+                if (e.target.closest('.product-card')) {
+                    const productCard = e.target.closest('.product-card');
+                    const productId = productCard.dataset.title;
+                    const productName = productCard.querySelector('h3').textContent;
+                    console.log('📦 Product clicked:', { productId, productName });
+                    await trackUserBehavior(user.uid, 'product_view', {
+                        productId,
+                        productName
+                    });
+                }
+            } catch (error) {
+                console.error('❌ Error tracking click event:', error);
+            }
         });
 
         // Track time spent every 5 minutes
@@ -167,45 +257,6 @@
             const user = auth.currentUser;
             if (user) {
                 trackPageView(user.uid);
-            }
-        });
-
-        // Listen for auth state changes
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log('User is signed in:', user);
-                // Create/Update user data in database
-                const userRef = ref(database, 'users/' + user.uid);
-                set(userRef, {
-                    email: user.email,
-                    displayName: user.displayName,
-                    lastLogin: new Date().toISOString(),
-                    photoURL: user.photoURL
-                });
-                
-                // Track initial page view
-                trackPageView(user.uid);
-                
-                // Hide login/signup buttons
-                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
-                    btn.style.display = 'none';
-                });
-                // Show sign out button
-                document.getElementById('signOutBtn').classList.remove('hidden');
-                document.getElementById('mobileSignOutBtn').classList.remove('hidden');
-                // Show admin button
-                document.getElementById('adminBtn').classList.remove('hidden');
-            } else {
-                console.log('User is signed out');
-                // Show login/signup buttons
-                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
-                    btn.style.display = 'block';
-                });
-                // Hide sign out button
-                document.getElementById('signOutBtn').classList.add('hidden');
-                document.getElementById('mobileSignOutBtn').classList.add('hidden');
-                // Hide admin button
-                document.getElementById('adminBtn').classList.add('hidden');
             }
         });
     </script>
