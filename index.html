@@ -15,7 +15,8 @@
             createUserWithEmailAndPassword, 
             updateProfile,
             GoogleAuthProvider,
-            signInWithPopup
+            signInWithPopup,
+            onAuthStateChanged
         } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
@@ -36,7 +37,12 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
+        
+        // Configure Google Auth Provider
         const googleProvider = new GoogleAuthProvider();
+        googleProvider.setCustomParameters({
+            prompt: 'select_account'
+        });
 
         // Make auth available globally
         window.auth = auth;
@@ -44,6 +50,23 @@
         window.updateProfile = updateProfile;
         window.googleProvider = googleProvider;
         window.signInWithPopup = signInWithPopup;
+
+        // Listen for auth state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log('User is signed in:', user);
+                // Update UI for signed in state
+                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
+                    btn.style.display = 'none';
+                });
+            } else {
+                console.log('User is signed out');
+                // Update UI for signed out state
+                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
+                    btn.style.display = 'block';
+                });
+            }
+        });
     </script>
     
     <!-- Tailwind CSS CDN -->
@@ -205,14 +228,11 @@
         }
         
         .profile-img {
-            transition: all 0.3s ease;
-            width: 3rem;
-            height: 3rem;
+            display: none;
         }
         
         .profile-img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+            display: none;
         }
 
         /* Mobile Menu Button Styles */
@@ -265,62 +285,60 @@
             box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
         }
         
+        /* Enhanced Error Message Styles */
         .error-message {
             color: #ef4444;
             font-size: 0.875rem;
             margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .error-message i {
+            color: #ef4444;
         }
         
         .success-message {
             color: #10b981;
             font-size: 0.875rem;
             margin-top: 0.5rem;
-        }
-
-        /* Google Sign In Button Styles */
-        .google-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: white;
-            color: #333;
+            padding: 0.75rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 0.5rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .google-btn:hover {
-            background: #f3f4f6;
-            transform: translateY(-1px);
-        }
-        
-        .google-btn img {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
-        
-        .divider {
             display: flex;
             align-items: center;
-            text-align: center;
-            color: #6b7280;
-            margin: 1.5rem 0;
+            gap: 0.5rem;
         }
         
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .success-message i {
+            color: #10b981;
         }
         
-        .divider span {
-            padding: 0 1rem;
+        .loading-spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
         }
-
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .google-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
         /* Enhanced Responsive Styles */
         @media (max-width: 768px) {
             .container {
@@ -437,9 +455,6 @@
                         <a href="#" class="login-btn text-base font-medium text-slate-300 hover:text-white rounded-lg">Login</a>
                         <a href="#" class="signup-btn text-white text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">Sign Up</a>
                     </div>
-                    <a href="#" title="My Profile" class="pl-2">
-                        <img src="https://i.pravatar.cc/48?u=rakib" class="profile-img rounded-full border-2 border-slate-600 hover:border-sky-400">
-                    </a>
                     <div class="lg:hidden">
                         <button id="menu-btn" class="text-gray-300 hover:text-white transition-colors">
                             <i data-feather="menu" class="w-8 h-8"></i>
@@ -707,7 +722,8 @@
             <!-- Google Sign In Button -->
             <button id="googleSignIn" class="google-btn mb-6">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-                Continue with Google
+                <span id="googleBtnText">Continue with Google</span>
+                <span id="googleBtnSpinner" class="loading-spinner hidden"></span>
             </button>
             
             <div class="divider">
@@ -727,8 +743,14 @@
                 <div>
                     <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm Password" required minlength="6">
                 </div>
-                <div id="errorMessage" class="error-message hidden"></div>
-                <div id="successMessage" class="success-message hidden"></div>
+                <div id="errorMessage" class="error-message hidden">
+                    <i data-feather="alert-circle" class="w-5 h-5"></i>
+                    <span id="errorText"></span>
+                </div>
+                <div id="successMessage" class="success-message hidden">
+                    <i data-feather="check-circle" class="w-5 h-5"></i>
+                    <span id="successText"></span>
+                </div>
                 <button type="submit" class="w-full btn-primary text-white font-semibold py-3 px-8 rounded-lg">
                     Create Account
                 </button>
@@ -958,14 +980,28 @@
 
         // Google Sign In
         const googleSignInBtn = document.getElementById('googleSignIn');
+        const googleBtnText = document.getElementById('googleBtnText');
+        const googleBtnSpinner = document.getElementById('googleBtnSpinner');
+        const errorText = document.getElementById('errorText');
+        const successText = document.getElementById('successText');
         
         googleSignInBtn.addEventListener('click', async () => {
             try {
+                // Show loading state
+                googleSignInBtn.disabled = true;
+                googleBtnText.textContent = 'Signing in...';
+                googleBtnSpinner.classList.remove('hidden');
+                errorMessage.classList.add('hidden');
+                successMessage.classList.add('hidden');
+                
+                // Attempt Google sign in
                 const result = await signInWithPopup(auth, googleProvider);
                 const user = result.user;
                 
+                console.log('Google sign in successful:', user);
+                
                 // Show success message
-                successMessage.textContent = 'Successfully signed in with Google!';
+                successText.textContent = 'Successfully signed in with Google!';
                 successMessage.classList.remove('hidden');
                 
                 // Close modal after 2 seconds
@@ -975,15 +1011,34 @@
                 }, 2000);
                 
             } catch (error) {
+                console.error('Google sign in error:', error);
+                
+                // Handle specific error cases
                 let errorMsg = 'An error occurred during Google sign in';
                 if (error.code === 'auth/popup-closed-by-user') {
-                    errorMsg = 'Sign in was cancelled';
+                    errorMsg = 'Sign in was cancelled. Please try again.';
                 } else if (error.code === 'auth/popup-blocked') {
-                    errorMsg = 'Pop-up was blocked by the browser';
+                    errorMsg = 'Pop-up was blocked by your browser. Please allow pop-ups for this site.';
+                } else if (error.code === 'auth/cancelled-popup-request') {
+                    errorMsg = 'Sign in was cancelled. Please try again.';
+                } else if (error.code === 'auth/network-request-failed') {
+                    errorMsg = 'Network error. Please check your internet connection and try again.';
+                } else if (error.code === 'auth/account-exists-with-different-credential') {
+                    errorMsg = 'An account already exists with the same email address but different sign-in credentials.';
+                } else if (error.code === 'auth/operation-not-allowed') {
+                    errorMsg = 'Google sign in is not enabled. Please contact support.';
+                } else if (error.code === 'auth/unauthorized-domain') {
+                    errorMsg = 'This domain is not authorized for Google sign in. Please contact support.';
                 }
                 
-                errorMessage.textContent = errorMsg;
+                errorText.textContent = errorMsg;
                 errorMessage.classList.remove('hidden');
+                
+            } finally {
+                // Reset button state
+                googleSignInBtn.disabled = false;
+                googleBtnText.textContent = 'Continue with Google';
+                googleBtnSpinner.classList.add('hidden');
             }
         });
     </script>
