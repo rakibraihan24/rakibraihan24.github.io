@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakib Raihan - Premium Digital Products</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- কাস্টম স্টাইল -->
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #0B1120; /* Deep dark blue background */
+            color: #E0E0E0;
+        }
+        .font-heading {
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass-card {
+            background: rgba(23, 33, 56, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #0ea5e9, #6366f1);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+        .floating-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 40;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        .newsletter-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .newsletter-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+        
+        /* Enhanced Header Button Styles */
+        .nav-link {
+            position: relative;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #38bdf8, #a78bfa);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .signup-btn {
+            background: linear-gradient(90deg, #0ea5e9, #6366f1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 1rem;
+            padding: 0.75rem 1.75rem;
+            min-width: 140px;
+            text-align: center;
+        }
+        
+        .signup-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #0ea5e9);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .signup-btn:hover::before {
+            left: 0;
+        }
+        
+        .login-btn {
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+            padding: 0.75rem 1.75rem;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover::before {
+            transform: translateX(0);
+        }
+        
+        .profile-img {
+            transition: all 0.3s ease;
+            width: 3rem;
+            height: 3rem;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Mobile Menu Button Styles */
+        .mobile-menu-btn {
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ===== হেডার ===== -->
+    <header class="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                <a href="#" id="home-link" class="text-3xl font-bold font-heading gradient-text hover:opacity-90 transition">Rakib Raihan</a>
+                
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-base font-medium text-slate-300 hover:text-white">হোম</a>
+                    <a href="#products" class="nav-link text-base font-medium text-slate-300 hover:text-white">প্রোডাক্টস</a>
+                    <a href="#testimonials" class="nav-link text-base font-medium text-slate-300 hover:text-white">প্রশংসা</a>
+                </nav>
+
+                <div class="flex items-center space-x-6">
+                    <div class="hidden lg:flex items-center space-x-6">
+                        <a href="#" class="login-btn text-base font-medium text-slate-300 hover:text-white rounded-lg">লগইন</a>
+                        <a href="#" class="signup-btn text-white text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">সাইন আপ</a>
+                    </div>
+                    <a href="#" title="My Profile" class="pl-2">
+                        <img src="https://i.pravatar.cc/48?u=rakib" class="profile-img rounded-full border-2 border-slate-600 hover:border-sky-400">
+                    </a>
+                    <div class="lg:hidden">
+                        <button id="menu-btn" class="text-gray-300 hover:text-white transition-colors">
+                            <i data-feather="menu" class="w-8 h-8"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- মোবাইল মেনু -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 absolute w-full shadow-lg">
+            <a href="#home" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">হোম</a>
+            <a href="#products" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">প্রোডাক্টস</a>
+            <a href="#testimonials" class="block py-4 px-6 text-base hover:bg-slate-800 transition-colors">প্রশংসা</a>
+            <div class="border-t border-slate-800 p-6 space-y-4">
+                <a href="#" class="mobile-menu-btn block text-center text-base font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600 transition-colors">লগইন</a>
+                <a href="#" class="mobile-menu-btn block text-center signup-btn text-white text-base font-semibold py-3 rounded-lg">সাইন আপ</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ===== হোম পেজ কন্টেন্ট ===== -->
+        <div id="homePage">
+            <!-- হিরো সেকশন -->
+            <section id="home" class="relative py-24 md:py-32 text-center overflow-hidden hero-pattern">
+                <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+                    <div data-aos="fade-up" data-aos-duration="1000">
+                        <h1 class="font-heading text-4xl md:text-6xl font-extrabold text-white leading-tight">
+                            Ideas to Reality with <span class="gradient-text">Digital Tools</span>
+                        </h1>
+                        <p class="mt-6 max-w-2xl mx-auto text-lg text-slate-400">আপনার প্রজেক্টের জন্য প্রয়োজনীয় প্রিমিয়াম ডিজিটাল প্রোডাক্টস, যা আপনার কাজকে করবে আরও সহজ ও আকর্ষণীয়।</p>
+                        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="#products" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg shadow-lg">প্রোডাক্টগুলো দেখুন</a>
+                            <a href="#contact" class="bg-slate-700/50 text-white font-semibold py-3 px-8 rounded-lg hover:bg-slate-700 transition">যোগাযোগ করুন</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- প্রোডাক্টস সেকশন -->
+            <section id="products" class="py-20">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white">Featured Products</h2>
+                        <p class="mt-4 text-slate-400">আমাদের精心ভাবে তৈরি করা সেরা কিছু প্রোডাক্ট।</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- প্রোডাক্ট কার্ড (এখানে data-* attribute ব্যবহার করে প্রোডাক্টের তথ্য দেওয়া হয়েছে) -->
+                        <a href="#" class="product-card glass-card rounded-xl p-6 block" 
+                            data-title="প্রোফেশনাল UI কিট" 
+                            data-price="৪৯৫০" 
+                            data-image="https://placehold.co/800x600/6366f1/ffffff?text=UI+Kit" 
+                            data-description="যেকোনো ওয়েব অ্যাপলিকেশনের জন্য একটি সম্পূর্ণ, আধুনিক এবং রেসপন্সিভ UI কিট। এতে ১০০+ কম্পোনেন্ট এবং পৃষ্ঠা রয়েছে।"
+                            data-rating="4.8"
+                            data-reviews="120">
+                            <img src="https://placehold.co/600x400/6366f1/ffffff?text=UI+Kit" alt="UI Kit" class="w-full h-48 object-cover rounded-lg mb-6">
+                            <h3 class="font-heading text-xl font-bold text-white mb-2">প্রোফেশনাল UI কিট</h3>
+                            <p class="text-slate-400 mb-4 text-sm">অ্যাপলিকেশন তৈরির জন্য সেরা ডিজাইন সিস্টেম।</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <span class="text-2xl font-bold font-heading text-sky-400">৳৪৯৫০</span>
+                                <span class="text-sm font-medium bg-slate-700/50 px-3 py-1 rounded-full">বিস্তারিত দেখুন &rarr;</span>
+                            </div>
+                        </a>
+                        <!-- প্রোডাক্ট কার্ড ২ -->
+                        <a href="#" class="product-card glass-card rounded-xl p-6 block"
+                            data-title="সোশ্যাল মিডিয়া টেমপ্লেট" 
+                            data-price="১৯৯০" 
+                            data-image="https://placehold.co/800x600/ec4899/ffffff?text=Templates" 
+                            data-description="ইনস্টাগ্রাম, ফেসবুক ও টুইটারের জন্য ডিজাইন করা ২০০+ আকর্ষণীয় এবং সহজেই সম্পাদনাযোগ্য টেমপ্লেট। আপনার ব্র্যান্ডকে ফুটিয়ে তুলুন।"
+                            data-rating="4.9"
+                            data-reviews="250">
+                            <img src="https://placehold.co/600x400/ec4899/ffffff?text=Templates" alt="Social Media Templates" class="w-full h-48 object-cover rounded-lg mb-6">
+                            <h3 class="font-heading text-xl font-bold text-white mb-2">সোশ্যাল মিডিয়া টেমপ্লেট</h3>
+                            <p class="text-slate-400 mb-4 text-sm">আপনার সোশ্যাল মিডিয়া পোস্টকে দিন নতুন রূপ।</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <span class="text-2xl font-bold font-heading text-sky-400">৳১৯৯০</span>
+                                <span class="text-sm font-medium bg-slate-700/50 px-3 py-1 rounded-full">বিস্তারিত দেখুন &rarr;</span>
+                            </div>
+                        </a>
+                        <!-- প্রোডাক্ট কার্ড ৩ -->
+                        <a href="#" class="product-card glass-card rounded-xl p-6 block"
+                            data-title="3D আইকন প্যাক" 
+                            data-price="২৯০০" 
+                            data-image="https://placehold.co/800x600/f59e0b/ffffff?text=3D+Icons" 
+                            data-description="আপনার ওয়েবসাইট ও অ্যাপকে আরও আকর্ষণীয় করতে ৫০০+ হাই-কোয়ালিটি 3D আইকন। বিভিন্ন ফরম্যাটে উপলব্ধ।"
+                            data-rating="5.0"
+                            data-reviews="95">
+                            <img src="https://placehold.co/600x400/f59e0b/ffffff?text=3D+Icons" alt="3D Icons" class="w-full h-48 object-cover rounded-lg mb-6">
+                            <h3 class="font-heading text-xl font-bold text-white mb-2">3D আইকন প্যাক</h3>
+                            <p class="text-slate-400 mb-4 text-sm">আপনার ডিজাইনে নতুন মাত্রা যোগ করুন।</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <span class="text-2xl font-bold font-heading text-sky-400">৳২৯০০</span>
+                                <span class="text-sm font-medium bg-slate-700/50 px-3 py-1 rounded-full">বিস্তারিত দেখুন &rarr;</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+             <!-- Testimonials Section -->
+            <section id="testimonials" class="py-20">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white">What Our Clients Say</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="glass-card p-8 rounded-xl">
+                            <p class="text-slate-300 italic">"Rakib Raihan-এর ডিজিটাল প্রোডাক্টগুলো আমার কাজের গতি অনেক বাড়িয়ে দিয়েছে। UI কিটটি অসাধারণ ছিল!"</p>
+                            <div class="flex items-center mt-6">
+                                <img class="w-12 h-12 rounded-full" src="https://i.pravatar.cc/150?u=client1" alt="Client 1">
+                                <div class="ml-4">
+                                    <p class="font-bold text-white">আরিফ হোসেন</p>
+                                    <p class="text-sm text-slate-400">ফ্রিল্যান্স ডেভেলপার</p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="glass-card p-8 rounded-xl">
+                            <p class="text-slate-300 italic">"সোশ্যাল মিডিয়া টেমপ্লেটগুলো ব্যবহার করে আমার ক্লায়েন্টদের জন্য দারুণ সব পোস্ট তৈরি করতে পারছি। Highly recommended!"</p>
+                            <div class="flex items-center mt-6">
+                                <img class="w-12 h-12 rounded-full" src="https://i.pravatar.cc/150?u=client2" alt="Client 2">
+                                <div class="ml-4">
+                                    <p class="font-bold text-white">ফারজানা চৌধুরী</p>
+                                    <p class="text-sm text-slate-400">ডিজিটাল মার্কেটার</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===== প্রোডাক্ট পেজ কন্টেন্ট (Hidden by default) ===== -->
+        <div id="productPage" class="hidden">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="mb-8">
+                    <button id="back-to-home" class="flex items-center text-slate-300 hover:text-white transition">
+                        <i data-feather="arrow-left" class="mr-2"></i>
+                        সব প্রোডাক্ট দেখুন
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- প্রোডাক্ট ইমেজ -->
+                    <div>
+                        <img id="product-image" src="" alt="Product Image" class="w-full h-auto object-cover rounded-xl shadow-2xl cursor-pointer">
+                        <button id="view-full-image" class="mt-4 w-full text-center py-2 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition">সম্পূর্ণ ছবি দেখুন</button>
+                    </div>
+                    <!-- প্রোডাক্টের বিবরণ -->
+                    <div class="flex flex-col justify-center">
+                        <h1 id="product-title" class="font-heading text-4xl font-bold text-white"></h1>
+                        <div class="flex items-center my-4">
+                            <div id="product-rating-stars" class="flex text-amber-400"></div>
+                            <span id="product-rating" class="ml-2 text-slate-400"></span>
+                            <span class="text-slate-500 mx-2">|</span>
+                            <span id="product-reviews" class="text-slate-400"></span>
+                        </div>
+                        <p id="product-description" class="text-slate-300 leading-relaxed mb-6"></p>
+                        
+                        <div class="my-6">
+                            <span class="text-4xl font-bold font-heading gradient-text" id="product-price"></span>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button class="btn-primary text-white font-semibold py-3 px-8 rounded-lg flex-grow">
+                                <i data-feather="shopping-cart" class="inline-block -mt-1 mr-2"></i>
+                                Buy Now
+                            </button>
+                            <button class="bg-slate-700/50 text-white font-semibold py-3 px-8 rounded-lg hover:bg-slate-700 transition flex-grow">
+                                <i data-feather="heart" class="inline-block -mt-1 mr-2"></i>
+                                Add to Wishlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <section class="py-20 bg-slate-900/50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-2xl mx-auto text-center" data-aos="fade-up">
+                    <h2 class="font-heading text-3xl font-bold text-white mb-4">Stay Updated</h2>
+                    <p class="text-slate-400 mb-8">নতুন প্রোডাক্ট এবং অফার সম্পর্কে জানতে আমাদের নিউজলেটারে সাবস্ক্রাইব করুন।</p>
+                    <form class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" placeholder="আপনার ইমেইল" class="newsletter-input flex-grow px-4 py-3 rounded-lg text-white focus:outline-none">
+                        <button type="submit" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg">সাবস্ক্রাইব</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== ফুটার ===== -->
+    <footer class="bg-slate-900/80 border-t border-slate-800 mt-20">
+        <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold font-heading gradient-text mb-4">Rakib Raihan</h3>
+                    <p class="text-slate-400">প্রিমিয়াম ডিজিটাল প্রোডাক্টস এবং সেবা প্রদানকারী।</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-slate-400 hover:text-sky-400 transition">হোম</a></li>
+                        <li><a href="#products" class="text-slate-400 hover:text-sky-400 transition">প্রোডাক্টস</a></li>
+                        <li><a href="#testimonials" class="text-slate-400 hover:text-sky-400 transition">প্রশংসা</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="text-slate-400">Email: contact@rakibraihan.com</li>
+                        <li class="text-slate-400">Phone: +880 1234-567890</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-sky-400 transition">
+                            <i data-feather="facebook" class="w-6 h-6"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-sky-400 transition">
+                            <i data-feather="twitter" class="w-6 h-6"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-sky-400 transition">
+                            <i data-feather="instagram" class="w-6 h-6"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-sky-400 transition">
+                            <i data-feather="linkedin" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2023 Rakib Raihan. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- ===== ইমেজ মডাল (বড় করে ছবি দেখার জন্য) ===== -->
+    <div id="imageModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="relative">
+            <button id="closeModal" class="absolute -top-4 -right-4 text-white bg-slate-800 rounded-full p-2">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+            <img id="modalImage" src="" class="max-w-full max-h-[90vh] rounded-lg">
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <a href="#" class="floating-btn bg-sky-600 text-white p-4 rounded-full shadow-lg hover:bg-sky-500 transition">
+        <i data-feather="arrow-up" class="w-6 h-6"></i>
+    </a>
+
+    <!-- ===== JavaScript Section ===== -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // আইকন রেন্ডার করার জন্য
+        feather.replace();
+
+        // ===== পেজ ন্যাভিগেশন এবং ডাইনামিক কন্টেন্ট =====
+        const homePage = document.getElementById('homePage');
+        const productPage = document.getElementById('productPage');
+        const productCards = document.querySelectorAll('.product-card');
+        const backToHomeBtn = document.getElementById('back-to-home');
+        const homeLink = document.getElementById('home-link');
+
+        // প্রোডাক্ট কার্ডে ক্লিক করলে প্রোডাক্ট পেজ দেখাবে
+        productCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // কার্ড থেকে ডেটা নেওয়া
+                const title = card.dataset.title;
+                const price = card.dataset.price;
+                const image = card.dataset.image;
+                const description = card.dataset.description;
+                const rating = parseFloat(card.dataset.rating);
+                const reviews = card.dataset.reviews;
+
+                // প্রোডাক্ট পেজের কন্টেন্ট আপডেট করা
+                document.getElementById('product-title').innerText = title;
+                document.getElementById('product-price').innerText = `৳${price}`;
+                document.getElementById('product-image').src = image;
+                document.getElementById('product-description').innerText = description;
+                document.getElementById('product-rating').innerText = `${rating} stars`;
+                document.getElementById('product-reviews').innerText = `${reviews} reviews`;
+                
+                // রেটিং স্টার তৈরি করা
+                const ratingStarsContainer = document.getElementById('product-rating-stars');
+                ratingStarsContainer.innerHTML = '';
+                for(let i=1; i<=5; i++){
+                    const star = document.createElement('i');
+                    star.dataset.feather = i <= rating ? 'star' : 'star';
+                    star.classList.add('w-5', 'h-5');
+                    if(i <= rating) {
+                        star.classList.add('fill-current');
+                    }
+                    ratingStarsContainer.appendChild(star);
+                }
+                feather.replace(); // নতুন আইকন রেন্ডার করার জন্য
+
+                // পেজ পরিবর্তন
+                homePage.classList.add('hidden');
+                productPage.classList.remove('hidden');
+                window.scrollTo(0, 0); // পৃষ্ঠার উপরে স্ক্রল করুন
+            });
+        });
+
+        // হোম পেজে ফিরে যাওয়ার জন্য
+        function showHomePage() {
+            homePage.classList.remove('hidden');
+            productPage.classList.add('hidden');
+        }
+        
+        backToHomeBtn.addEventListener('click', showHomePage);
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showHomePage();
+        });
+
+        // ===== মোবাইল মেনু টগল =====
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // ===== ইমেজ মডাল =====
+        const imageModal = document.getElementById('imageModal');
+        const viewFullImageBtn = document.getElementById('view-full-image');
+        const closeModalBtn = document.getElementById('closeModal');
+        const modalImage = document.getElementById('modalImage');
+        const mainProductImage = document.getElementById('product-image');
+
+        function openModal() {
+            modalImage.src = mainProductImage.src;
+            imageModal.classList.remove('hidden');
+            imageModal.classList.add('flex');
+        }
+
+        function closeModal() {
+            imageModal.classList.add('hidden');
+            imageModal.classList.remove('flex');
+        }
+
+        viewFullImageBtn.addEventListener('click', openModal);
+        mainProductImage.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        
+        // মডালের বাইরে ক্লিক করলে বন্ধ হবে
+        imageModal.addEventListener('click', (e) => {
+            if(e.target === imageModal) {
+                closeModal();
+            }
+        });
+
+        // Smooth scroll for floating button
+        document.querySelector('.floating-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Newsletter form submission
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('input[type="email"]').value;
+            // Add your newsletter subscription logic here
+            alert('Thank you for subscribing!');
+            e.target.reset();
+        });
+    </script>
+
+</body>
+</html>
