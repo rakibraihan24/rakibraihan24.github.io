@@ -383,6 +383,50 @@
                 
                 // Clear local storage
                 localStorage.removeItem('authState');
+                console.log('🗑️ Cleared auth state from localStorage');
+                
+                // Update UI elements
+                // Show login/signup buttons
+                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
+                    btn.style.display = 'block';
+                    btn.classList.remove('hidden');
+                });
+                
+                // Hide sign out buttons
+                const signOutBtn = document.getElementById('signOutBtn');
+                const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
+                if (signOutBtn) {
+                    signOutBtn.style.display = 'none';
+                    signOutBtn.classList.add('hidden');
+                }
+                if (mobileSignOutBtn) {
+                    mobileSignOutBtn.style.display = 'none';
+                    mobileSignOutBtn.classList.add('hidden');
+                }
+                
+                // Reset desktop header
+                const desktopAuthButtons = document.querySelector('.hidden.lg\\:flex.items-center.space-x-6');
+                if (desktopAuthButtons) {
+                    desktopAuthButtons.innerHTML = `
+                        <a href="#" class="login-btn text-white hover:text-sky-400 transition">Login</a>
+                        <a href="#" class="signup-btn bg-sky-600 hover:bg-sky-500 text-white px-6 py-2 rounded-lg transition">Sign Up</a>
+                    `;
+                }
+                
+                // Reset mobile menu
+                const mobileAuthButtons = document.querySelector('#mobile-menu .border-t.border-slate-800.p-6.space-y-4');
+                if (mobileAuthButtons) {
+                    mobileAuthButtons.innerHTML = `
+                        <a href="#" class="login-btn block text-white hover:text-sky-400 transition">Login</a>
+                        <a href="#" class="signup-btn block bg-sky-600 hover:bg-sky-500 text-white px-6 py-2 rounded-lg transition">Sign Up</a>
+                    `;
+                }
+                
+                // Hide user panel
+                const userPanel = document.getElementById('userPanel');
+                if (userPanel) {
+                    userPanel.classList.add('hidden');
+                }
                 
                 // Show success message
                 const successMessage = document.createElement('div');
