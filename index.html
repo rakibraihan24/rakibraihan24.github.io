@@ -45,10 +45,24 @@
         const auth = getAuth(app);
         const database = getDatabase(app);
         
-        // Enable persistence
+        // Enable persistence and check local storage
         setPersistence(auth, browserLocalPersistence)
             .then(() => {
                 console.log('✅ Auth persistence enabled');
+                // Check local storage for existing auth state
+                const savedAuthState = localStorage.getItem('authState');
+                if (savedAuthState) {
+                    console.log('📦 Found saved auth state:', savedAuthState);
+                    const userData = JSON.parse(savedAuthState);
+                    // Update UI based on saved state
+                    document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
+                        btn.style.display = 'none';
+                    });
+                    const signOutBtn = document.getElementById('signOutBtn');
+                    const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
+                    if (signOutBtn) signOutBtn.style.display = 'block';
+                    if (mobileSignOutBtn) mobileSignOutBtn.style.display = 'block';
+                }
             })
             .catch((error) => {
                 console.error('❌ Error enabling auth persistence:', error);
@@ -179,11 +193,168 @@
             });
         };
 
-        // Listen for auth state changes
-        onAuthStateChanged(auth, async (user) => {
+        // Function to update UI based on auth state
+        const updateUIForAuthState = (user) => {
+            console.log('🔄 Updating UI for auth state:', user ? 'User is signed in' : 'No user signed in');
+            
+            // Get all necessary elements
+            const loginButtons = document.querySelectorAll('.login-btn');
+            const signupButtons = document.querySelectorAll('.signup-btn');
+            const signOutBtn = document.getElementById('signOutBtn');
+            const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
+            const userPanel = document.getElementById('userPanel');
+            const desktopAuthButtons = document.querySelector('.hidden.lg\\:flex.items-center.space-x-6');
+            const mobileAuthButtons = document.querySelector('#mobile-menu .border-t.border-slate-800.p-6.space-y-4');
+
             if (user) {
-                console.log('👤 User is signed in:', user);
+                // User is signed in
+                console.log('👤 User is signed in, updating UI...');
                 
+                // Hide login/signup buttons
+                loginButtons.forEach(btn => {
+                    btn.style.display = 'none';
+                    btn.classList.add('hidden');
+                });
+                signupButtons.forEach(btn => {
+                    btn.style.display = 'none';
+                    btn.classList.add('hidden');
+                });
+
+                // Show sign out buttons
+                if (signOutBtn) {
+                    signOutBtn.style.display = 'block';
+                    signOutBtn.classList.remove('hidden');
+                }
+                if (mobileSignOutBtn) {
+                    mobileSignOutBtn.style.display = 'block';
+                    mobileSignOutBtn.classList.remove('hidden');
+                }
+
+                // Show user panel
+                if (userPanel) {
+                    userPanel.classList.remove('hidden');
+                }
+
+                // Update desktop header
+                if (desktopAuthButtons) {
+                    desktopAuthButtons.innerHTML = `
+                        <div class="flex items-center space-x-4">
+                            <img src="${user.photoURL || 'https://i.pravatar.cc/150?u=' + user.uid}" 
+                                 alt="Profile" 
+                                 class="w-8 h-8 rounded-full border-2 border-sky-400">
+                            <span class="text-white">${user.displayName || user.email}</span>
+                        </div>
+                        <button id="signOutBtn" class="text-white hover:text-sky-400 transition">Sign Out</button>
+                    `;
+                    // Reattach event listener
+                    document.getElementById('signOutBtn').addEventListener('click', handleSignOut);
+                }
+
+                // Update mobile menu
+                if (mobileAuthButtons) {
+                    mobileAuthButtons.innerHTML = `
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img src="${user.photoURL || 'https://i.pravatar.cc/150?u=' + user.uid}" 
+                                 alt="Profile" 
+                                 class="w-8 h-8 rounded-full border-2 border-sky-400">
+                            <span class="text-white">${user.displayName || user.email}</span>
+                        </div>
+                        <button id="mobileSignOutBtn" class="w-full text-white hover:text-sky-400 transition">Sign Out</button>
+                    `;
+                    // Reattach event listener
+                    document.getElementById('mobileSignOutBtn').addEventListener('click', handleSignOut);
+                }
+
+            } else {
+                // User is signed out
+                console.log('👤 User is signed out, updating UI...');
+                
+                // Show login/signup buttons
+                loginButtons.forEach(btn => {
+                    btn.style.display = 'block';
+                    btn.classList.remove('hidden');
+                });
+                signupButtons.forEach(btn => {
+                    btn.style.display = 'block';
+                    btn.classList.remove('hidden');
+                });
+
+                // Hide sign out buttons
+                if (signOutBtn) {
+                    signOutBtn.style.display = 'none';
+                    signOutBtn.classList.add('hidden');
+                }
+                if (mobileSignOutBtn) {
+                    mobileSignOutBtn.style.display = 'none';
+                    mobileSignOutBtn.classList.add('hidden');
+                }
+
+                // Hide user panel
+                if (userPanel) {
+                    userPanel.classList.add('hidden');
+                }
+
+                // Reset desktop header
+                if (desktopAuthButtons) {
+                    desktopAuthButtons.innerHTML = `
+                        <a href="#" class="login-btn text-white hover:text-sky-400 transition">Login</a>
+                        <a href="#" class="signup-btn bg-sky-600 hover:bg-sky-500 text-white px-6 py-2 rounded-lg transition">Sign Up</a>
+                    `;
+                }
+
+                // Reset mobile menu
+                if (mobileAuthButtons) {
+                    mobileAuthButtons.innerHTML = `
+                        <a href="#" class="login-btn block text-white hover:text-sky-400 transition">Login</a>
+                        <a href="#" class="signup-btn block bg-sky-600 hover:bg-sky-500 text-white px-6 py-2 rounded-lg transition">Sign Up</a>
+                    `;
+                }
+            }
+        };
+
+        // Update auth state change listener
+        onAuthStateChanged(auth, async (user) => {
+            console.log('🔄 Auth state changed:', user ? 'User is signed in' : 'No user signed in');
+            
+            // Save auth state to local storage
+            if (user) {
+                const userData = {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL
+                };
+                localStorage.setItem('authState', JSON.stringify(userData));
+                
+                // Hide login/signup buttons
+                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
+                    btn.style.display = 'none';
+                });
+                
+                // Show sign out button
+                const signOutBtn = document.getElementById('signOutBtn');
+                const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
+                if (signOutBtn) signOutBtn.style.display = 'block';
+                if (mobileSignOutBtn) mobileSignOutBtn.style.display = 'block';
+            } else {
+                localStorage.removeItem('authState');
+                
+                // Show login/signup buttons
+                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
+                    btn.style.display = 'block';
+                });
+                
+                // Hide sign out button
+                const signOutBtn = document.getElementById('signOutBtn');
+                const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
+                if (signOutBtn) signOutBtn.style.display = 'none';
+                if (mobileSignOutBtn) mobileSignOutBtn.style.display = 'none';
+            }
+
+            // Update UI
+            updateUIForAuthState(user);
+
+            if (user) {
                 try {
                     // Create/Update user data in database
                     const userRef = ref(database, 'users/' + user.uid);
@@ -196,74 +367,47 @@
                     });
                     console.log('✅ User data saved successfully');
 
-                    // Track initial page view
-                    await trackUserBehavior(user.uid, 'page_view', {
-                        page: window.location.pathname,
-                        referrer: document.referrer
-                    });
-                    
-                    // Hide login/signup buttons
-                    document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
-                        btn.style.display = 'none';
-                    });
-                    // Show sign out button
-                    document.getElementById('signOutBtn').classList.remove('hidden');
-                    document.getElementById('mobileSignOutBtn').classList.remove('hidden');
-                    // Show admin button
-                    document.getElementById('adminBtn').classList.remove('hidden');
+                    // Load wishlist
+                    await loadWishlist(user);
                 } catch (error) {
                     console.error('❌ Error saving user data:', error);
                 }
-            } else {
-                console.log('👤 User is signed out');
-                // Show login/signup buttons
-                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
-                    btn.style.display = 'block';
-                });
-                // Hide sign out button
-                document.getElementById('signOutBtn').classList.add('hidden');
-                document.getElementById('mobileSignOutBtn').classList.add('hidden');
-                // Hide admin button
-                document.getElementById('adminBtn').classList.add('hidden');
             }
         });
 
-        // Add event listeners for tracking
-        document.addEventListener('click', async (e) => {
-            const user = auth.currentUser;
-            if (!user) {
-                console.log('❌ No user logged in for tracking');
-                return;
-            }
-
-            console.log('🖱️ Click event detected:', e.target);
-
+        // Add sign out functionality
+        const handleSignOut = async () => {
             try {
-                // Track button clicks
-                if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                    const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
-                    console.log('🔘 Button clicked:', button);
-                    await trackUserBehavior(user.uid, 'button_click', {
-                        buttonId: button.id || 'unnamed-button',
-                        buttonText: button.textContent.trim()
-                    });
-                }
-
-                // Track product clicks
-                if (e.target.closest('.product-card')) {
-                    const productCard = e.target.closest('.product-card');
-                    const productId = productCard.dataset.title;
-                    const productName = productCard.querySelector('h3').textContent;
-                    console.log('📦 Product clicked:', { productId, productName });
-                    await trackUserBehavior(user.uid, 'product_view', {
-                        productId,
-                        productName
-                    });
-                }
+                await auth.signOut();
+                console.log('✅ User signed out successfully');
+                
+                // Clear local storage
+                localStorage.removeItem('authState');
+                
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                successMessage.textContent = 'Successfully signed out!';
+                document.body.appendChild(successMessage);
+                
+                setTimeout(() => {
+                    successMessage.remove();
+                }, 3000);
+                
             } catch (error) {
-                console.error('❌ Error tracking click event:', error);
+                console.error('❌ Error signing out:', error);
+                
+                // Show error message
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                errorMessage.textContent = 'Error signing out. Please try again.';
+                document.body.appendChild(errorMessage);
+                
+                setTimeout(() => {
+                    errorMessage.remove();
+                }, 3000);
             }
-        });
+        };
 
         // Track time spent every 5 minutes
         setInterval(() => {
@@ -1520,42 +1664,6 @@
         const signOutBtn = document.getElementById('signOutBtn');
         const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
 
-        async function handleSignOut() {
-            try {
-                await auth.signOut();
-                console.log('✅ User signed out successfully');
-                
-                // Show success message
-                const successMessage = document.createElement('div');
-                successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                successMessage.textContent = 'Successfully signed out!';
-                document.body.appendChild(successMessage);
-                
-                // Remove success message after 3 seconds
-                setTimeout(() => {
-                    successMessage.remove();
-                }, 3000);
-                
-            } catch (error) {
-                console.error('❌ Error signing out:', error);
-                
-                // Show error message
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                errorMessage.textContent = 'Error signing out. Please try again.';
-                document.body.appendChild(errorMessage);
-                
-                // Remove error message after 3 seconds
-                setTimeout(() => {
-                    errorMessage.remove();
-                }, 3000);
-            }
-        }
-
-        // Add click event listeners for sign out buttons
-        document.getElementById('signOutBtn').addEventListener('click', handleSignOut);
-        document.getElementById('mobileSignOutBtn').addEventListener('click', handleSignOut);
-
         // User Panel Functions
         const userPanel = document.getElementById('userPanel');
         const userProfileImage = document.getElementById('userProfileImage');
@@ -1660,259 +1768,6 @@
             }
             return '';
         };
-
-        // Update auth state change listener
-        let authStateInitialized = false;
-
-        onAuthStateChanged(auth, async (user) => {
-            console.log('🔄 Auth state changed:', user ? 'User is signed in' : 'No user signed in');
-            
-            // Wait for DOM to be ready
-            if (!authStateInitialized) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-                authStateInitialized = true;
-            }
-
-            if (user) {
-                console.log('👤 User is signed in:', user);
-                
-                // Save user data to localStorage
-                const userData = {
-                    uid: user.uid,
-                    email: user.email,
-                    displayName: user.displayName,
-                    photoURL: user.photoURL,
-                    lastLogin: new Date().toISOString()
-                };
-                localStorage.setItem('userData', JSON.stringify(userData));
-                
-                try {
-                    // Create/Update user data in database
-                    const userRef = ref(database, 'users/' + user.uid);
-                    await set(userRef, {
-                        ...userData,
-                        lastUpdated: new Date().toISOString()
-                    });
-                    console.log('✅ User data saved successfully');
-
-                    // Update user panel
-                    await updateUserPanel(user);
-                    
-                    // Show user panel
-                    userPanel.classList.remove('hidden');
-                    
-                    // Hide all login/signup buttons
-                    document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
-                        btn.style.display = 'none';
-                    });
-                    
-                    // Show sign out button
-                    const signOutBtn = document.getElementById('signOutBtn');
-                    const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
-                    
-                    if (signOutBtn) {
-                        signOutBtn.classList.remove('hidden');
-                        signOutBtn.style.display = 'block';
-                    }
-                    if (mobileSignOutBtn) {
-                        mobileSignOutBtn.classList.remove('hidden');
-                        mobileSignOutBtn.style.display = 'block';
-                    }
-                    
-                    // Show admin button
-                    const adminBtn = document.getElementById('adminBtn');
-                    if (adminBtn) {
-                        adminBtn.classList.remove('hidden');
-                        adminBtn.style.display = 'block';
-                    }
-
-                    // Update user profile in header
-                    const userProfileContainer = document.createElement('div');
-                    userProfileContainer.className = 'flex items-center space-x-4';
-                    userProfileContainer.innerHTML = `
-                        <img src="${user.photoURL || 'https://i.pravatar.cc/150?u=' + user.uid}" 
-                             alt="Profile" 
-                             class="w-8 h-8 rounded-full border-2 border-sky-400">
-                        <span class="text-white">${user.displayName || user.email}</span>
-                    `;
-                    
-                    // Replace login/signup buttons with profile in desktop header
-                    const desktopAuthButtons = document.querySelector('.hidden.lg\\:flex.items-center.space-x-6');
-                    if (desktopAuthButtons) {
-                        desktopAuthButtons.innerHTML = '';
-                        desktopAuthButtons.appendChild(userProfileContainer);
-                        if (signOutBtn) desktopAuthButtons.appendChild(signOutBtn);
-                    }
-
-                    // Update mobile menu
-                    const mobileAuthButtons = document.querySelector('#mobile-menu .border-t.border-slate-800.p-6.space-y-4');
-                    if (mobileAuthButtons) {
-                        mobileAuthButtons.innerHTML = `
-                            <div class="flex items-center space-x-4 mb-4">
-                                <img src="${user.photoURL || 'https://i.pravatar.cc/150?u=' + user.uid}" 
-                                     alt="Profile" 
-                                     class="w-8 h-8 rounded-full border-2 border-sky-400">
-                                <span class="text-white">${user.displayName || user.email}</span>
-                            </div>
-                        `;
-                        if (mobileSignOutBtn) mobileAuthButtons.appendChild(mobileSignOutBtn);
-                    }
-
-                    // Load wishlist
-                    await loadWishlist(user);
-
-                } catch (error) {
-                    console.error('❌ Error saving user data:', error);
-                }
-            } else {
-                console.log('👤 User is signed out');
-                
-                // Clear user data from localStorage
-                localStorage.removeItem('userData');
-                
-                // Hide user panel
-                userPanel.classList.add('hidden');
-                
-                // Show login/signup buttons
-                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
-                    btn.style.display = 'block';
-                });
-                
-                // Hide sign out button
-                const signOutBtn = document.getElementById('signOutBtn');
-                const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
-                
-                if (signOutBtn) {
-                    signOutBtn.classList.add('hidden');
-                    signOutBtn.style.display = 'none';
-                }
-                if (mobileSignOutBtn) {
-                    mobileSignOutBtn.classList.add('hidden');
-                    mobileSignOutBtn.style.display = 'none';
-                }
-                
-                // Hide admin button
-                const adminBtn = document.getElementById('adminBtn');
-                if (adminBtn) {
-                    adminBtn.classList.add('hidden');
-                    adminBtn.style.display = 'none';
-                }
-
-                // Reset desktop header
-                const desktopAuthButtons = document.querySelector('.hidden.lg\\:flex.items-center.space-x-6');
-                if (desktopAuthButtons) {
-                    desktopAuthButtons.innerHTML = `
-                        <a href="#" class="login-btn text-white hover:text-sky-400 transition">Login</a>
-                        <a href="#" class="signup-btn bg-sky-600 hover:bg-sky-500 text-white px-6 py-2 rounded-lg transition">Sign Up</a>
-                    `;
-                }
-
-                // Reset mobile menu
-                const mobileAuthButtons = document.querySelector('#mobile-menu .border-t.border-slate-800.p-6.space-y-4');
-                if (mobileAuthButtons) {
-                    mobileAuthButtons.innerHTML = `
-                        <a href="#" class="login-btn block text-white hover:text-sky-400 transition">Login</a>
-                        <a href="#" class="signup-btn block bg-sky-600 hover:bg-sky-500 text-white px-6 py-2 rounded-lg transition">Sign Up</a>
-                    `;
-                }
-            }
-        });
-
-        // Check localStorage on page load
-        window.addEventListener('load', () => {
-            const savedUserData = localStorage.getItem('userData');
-            if (savedUserData) {
-                const userData = JSON.parse(savedUserData);
-                console.log('📱 Found saved user data:', userData);
-                
-                // Update UI based on saved data
-                const userProfileContainer = document.createElement('div');
-                userProfileContainer.className = 'flex items-center space-x-4';
-                userProfileContainer.innerHTML = `
-                    <img src="${userData.photoURL || 'https://i.pravatar.cc/150?u=' + userData.uid}" 
-                         alt="Profile" 
-                         class="w-8 h-8 rounded-full border-2 border-sky-400">
-                    <span class="text-white">${userData.displayName || userData.email}</span>
-                `;
-                
-                // Update desktop header
-                const desktopAuthButtons = document.querySelector('.hidden.lg\\:flex.items-center.space-x-6');
-                if (desktopAuthButtons) {
-                    desktopAuthButtons.innerHTML = '';
-                    desktopAuthButtons.appendChild(userProfileContainer);
-                    const signOutBtn = document.getElementById('signOutBtn');
-                    if (signOutBtn) {
-                        signOutBtn.classList.remove('hidden');
-                        signOutBtn.style.display = 'block';
-                        desktopAuthButtons.appendChild(signOutBtn);
-                    }
-                }
-
-                // Update mobile menu
-                const mobileAuthButtons = document.querySelector('#mobile-menu .border-t.border-slate-800.p-6.space-y-4');
-                if (mobileAuthButtons) {
-                    mobileAuthButtons.innerHTML = `
-                        <div class="flex items-center space-x-4 mb-4">
-                            <img src="${userData.photoURL || 'https://i.pravatar.cc/150?u=' + userData.uid}" 
-                                 alt="Profile" 
-                                 class="w-8 h-8 rounded-full border-2 border-sky-400">
-                            <span class="text-white">${userData.displayName || userData.email}</span>
-                        </div>
-                    `;
-                    const mobileSignOutBtn = document.getElementById('mobileSignOutBtn');
-                    if (mobileSignOutBtn) {
-                        mobileSignOutBtn.classList.remove('hidden');
-                        mobileSignOutBtn.style.display = 'block';
-                        mobileAuthButtons.appendChild(mobileSignOutBtn);
-                    }
-                }
-
-                // Hide login/signup buttons
-                document.querySelectorAll('.login-btn, .signup-btn').forEach(btn => {
-                    btn.style.display = 'none';
-                });
-            }
-        });
-
-        // Add sign out functionality
-        const handleSignOut = async () => {
-            try {
-                await auth.signOut();
-                console.log('✅ User signed out successfully');
-                
-                // Clear localStorage
-                localStorage.removeItem('userData');
-                
-                // Show success message
-                const successMessage = document.createElement('div');
-                successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                successMessage.textContent = 'Successfully signed out!';
-                document.body.appendChild(successMessage);
-                
-                // Remove success message after 3 seconds
-                setTimeout(() => {
-                    successMessage.remove();
-                }, 3000);
-                
-            } catch (error) {
-                console.error('❌ Error signing out:', error);
-                
-                // Show error message
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                errorMessage.textContent = 'Error signing out. Please try again.';
-                document.body.appendChild(errorMessage);
-                
-                // Remove error message after 3 seconds
-                setTimeout(() => {
-                    errorMessage.remove();
-                }, 3000);
-            }
-        };
-
-        // Add click event listeners for sign out buttons
-        document.getElementById('signOutBtn').addEventListener('click', handleSignOut);
-        document.getElementById('mobileSignOutBtn').addEventListener('click', handleSignOut);
 
         // Edit Profile Button Click
         editProfileBtn.addEventListener('click', async () => {
