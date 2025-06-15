@@ -59,15 +59,24 @@ app.use((error, req, res, next) => {
     next(error);
 });
 
-// MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/digital_market', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Connected to MongoDB');
-}).catch((err) => {
-    console.error('MongoDB connection error:', err);
-});
+// MongoDB Connection with retry
+let isConnected = false;
+const connectWithRetry = async () => {
+    try {
+        await mongoose.connect('mongodb://localhost:27017/digital_market', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        isConnected = true;
+        console.log('MongoDB connection successful');
+    } catch (err) {
+        console.error('MongoDB connection error:', err);
+        console.log('Retrying connection in 5 seconds...');
+        setTimeout(connectWithRetry, 5000);
+    }
+};
+
+connectWithRetry();
 
 // Product Schema
 const productSchema = new mongoose.Schema({
@@ -84,34 +93,56 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
+// Middleware to check database connection
+const checkDatabaseConnection = (req, res, next) => {
+    if (!isConnected) {
+        return res.status(503).json({ 
+            message: 'ডাটাবেস সংযোগ স্থাপন করা যায়নি। অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন।',
+            error: 'Database connection not established'
+        });
+    }
+    next();
+};
+
 // Routes
 // Get all products
-app.get('/api/products', async (req, res) => {
+app.get('/api/products', checkDatabaseConnection, async (req, res) => {
     try {
+        console.log('Fetching all products...');
         const products = await Product.find().sort({ createdAt: -1 });
+        console.log(`Found ${products.length} products`);
         res.json(products);
     } catch (error) {
         console.error('Error fetching products:', error);
-        res.status(500).json({ message: 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।' });
+        res.status(500).json({ 
+            message: 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।',
+            error: error.message 
+        });
     }
 });
 
 // Get single product
-app.get('/api/products/:id', async (req, res) => {
+app.get('/api/products/:id', checkDatabaseConnection, async (req, res) => {
     try {
+        console.log(`Fetching product with ID: ${req.params.id}`);
         const product = await Product.findById(req.params.id);
         if (!product) {
+            console.log('Product not found');
             return res.status(404).json({ message: 'প্রোডাক্ট পাওয়া যায়নি।' });
         }
+        console.log('Product found:', product.title);
         res.json(product);
     } catch (error) {
         console.error('Error fetching product:', error);
-        res.status(500).json({ message: 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।' });
+        res.status(500).json({ 
+            message: 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।',
+            error: error.message 
+        });
     }
 });
 
 // Upload image
-app.post('/api/upload', upload.single('image'), (req, res) => {
+app.post('/api/upload', checkDatabaseConnection, upload.single('image'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'কোন ছবি আপলোড করা হয়নি।' });
@@ -126,19 +157,22 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
 });
 
 // Create product
-app.post('/api/products', async (req, res) => {
+app.post('/api/products', checkDatabaseConnection, async (req, res) => {
     try {
         const product = new Product(req.body);
         const savedProduct = await product.save();
         res.status(201).json(savedProduct);
     } catch (error) {
         console.error('Error creating product:', error);
-        res.status(400).json({ message: 'প্রোডাক্ট তৈরি করতে সমস্যা হয়েছে।' });
+        res.status(400).json({ 
+            message: 'প্রোডাক্ট তৈরি করতে সমস্যা হয়েছে।',
+            error: error.message 
+        });
     }
 });
 
 // Update product
-app.put('/api/products/:id', async (req, res) => {
+app.put('/api/products/:id', checkDatabaseConnection, async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(
             req.params.id,
@@ -151,12 +185,15 @@ app.put('/api/products/:id', async (req, res) => {
         res.json(product);
     } catch (error) {
         console.error('Error updating product:', error);
-        res.status(400).json({ message: 'প্রোডাক্ট আপডেট করতে সমস্যা হয়েছে।' });
+        res.status(400).json({ 
+            message: 'প্রোডাক্ট আপডেট করতে সমস্যা হয়েছে।',
+            error: error.message 
+        });
     }
 });
 
 // Delete product
-app.delete('/api/products/:id', async (req, res) => {
+app.delete('/api/products/:id', checkDatabaseConnection, async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) {
@@ -174,7 +211,10 @@ app.delete('/api/products/:id', async (req, res) => {
         res.json({ message: 'প্রোডাক্ট সফলভাবে মুছে ফেলা হয়েছে।' });
     } catch (error) {
         console.error('Error deleting product:', error);
-        res.status(500).json({ message: 'প্রোডাক্ট মুছে ফেলতে সমস্যা হয়েছে।' });
+        res.status(500).json({ 
+            message: 'প্রোডাক্ট মুছে ফেলতে সমস্যা হয়েছে।',
+            error: error.message 
+        });
     }
 });
 

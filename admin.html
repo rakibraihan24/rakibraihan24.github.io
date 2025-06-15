@@ -232,56 +232,88 @@
         closeModal.addEventListener('click', hideModal);
         cancelBtn.addEventListener('click', hideModal);
 
-        // Load Products
+        // Load products
         async function loadProducts() {
             try {
+                console.log('Loading products...');
                 const response = await fetch(`${API_BASE_URL}/products`);
-                const products = await response.json();
                 
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
+                }
+
+                const products = await response.json();
+                console.log(`Loaded ${products.length} products`);
+
+                // Update statistics
+                document.getElementById('totalProducts').textContent = products.length;
+                const totalSales = products.reduce((sum, product) => sum + product.price, 0);
+                document.getElementById('totalSales').textContent = `৳${totalSales}`;
+
+                // Update product list
+                const productList = document.getElementById('productList');
                 productList.innerHTML = '';
+
+                if (products.length === 0) {
+                    productList.innerHTML = `
+                        <tr>
+                            <td colspan="4" class="text-center py-4">
+                                কোন প্রোডাক্ট পাওয়া যায়নি। নতুন প্রোডাক্ট যোগ করুন।
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
                 products.forEach(product => {
                     const row = document.createElement('tr');
-                    row.className = 'border-b border-slate-800';
                     row.innerHTML = `
                         <td class="py-4">
-                            <img src="${product.image}" alt="${product.title}" class="w-16 h-16 object-cover rounded-lg">
+                            <div class="flex items-center">
+                                <img src="${product.image}" alt="${product.title}" class="w-12 h-12 rounded-lg object-cover mr-4">
+                                <div>
+                                    <h3 class="font-medium">${product.title}</h3>
+                                    <p class="text-sm text-gray-500">৳${product.price}</p>
+                                </div>
+                            </div>
                         </td>
-                        <td class="py-4">${product.title}</td>
-                        <td class="py-4">৳${product.price}</td>
-                        <td class="py-4">${product.rating} ⭐</td>
+                        <td class="py-4">${product.rating} / 5</td>
+                        <td class="py-4">${new Date(product.createdAt).toLocaleDateString('bn-BD')}</td>
                         <td class="py-4">
                             <div class="flex space-x-2">
-                                <button onclick="editProduct('${product._id}')" class="p-2 rounded-lg border border-slate-700 hover:border-slate-600 transition">
-                                    <i data-feather="edit" class="w-4 h-4"></i>
+                                <button onclick="editProduct('${product._id}')" class="text-blue-600 hover:text-blue-800">
+                                    <i class="fas fa-edit"></i>
                                 </button>
-                                <button onclick="deleteProduct('${product._id}')" class="p-2 rounded-lg border border-slate-700 hover:border-slate-600 transition text-red-400">
-                                    <i data-feather="trash-2" class="w-4 h-4"></i>
+                                <button onclick="deleteProduct('${product._id}')" class="text-red-600 hover:text-red-800">
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </div>
                         </td>
                     `;
                     productList.appendChild(row);
                 });
-                
-                // Update stats
-                totalProducts.textContent = products.length;
-                const totalSalesAmount = products.reduce((sum, product) => sum + product.price, 0);
-                totalSales.textContent = `৳${totalSalesAmount}`;
-                
-                feather.replace();
             } catch (error) {
                 console.error('Error loading products:', error);
-                alert('প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
+                alert(error.message || 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
             }
         }
 
-        // Edit Product
+        // Edit product
         async function editProduct(id) {
             try {
+                console.log(`Loading product for editing: ${id}`);
                 const response = await fetch(`${API_BASE_URL}/products/${id}`);
-                const product = await response.json();
                 
-                modalTitle.textContent = 'প্রোডাক্ট সম্পাদনা';
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
+                }
+
+                const product = await response.json();
+                console.log('Product loaded:', product.title);
+
+                // Populate form
                 document.getElementById('productId').value = product._id;
                 document.getElementById('productName').value = product.title;
                 document.getElementById('productPrice').value = product.price;
@@ -292,29 +324,40 @@
                 document.getElementById('productIncludes').value = product.includes.join('\n');
                 document.getElementById('productFullDescription').value = product.fullDescription;
 
-                // Show image preview
-                imagePreviewImg.src = product.image;
-                imagePreview.classList.remove('hidden');
+                // Show preview
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = product.image;
+                imagePreview.style.display = 'block';
 
+                // Show modal
                 showModal();
             } catch (error) {
-                console.error('Error loading product:', error);
-                alert('প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
+                console.error('Error loading product for edit:', error);
+                alert(error.message || 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
             }
         }
 
-        // Delete Product
+        // Delete product
         async function deleteProduct(id) {
-            if (confirm('আপনি কি এই প্রোডাক্টটি মুছে ফেলতে চান?')) {
-                try {
-                    await fetch(`${API_BASE_URL}/products/${id}`, {
-                        method: 'DELETE'
-                    });
-                    loadProducts();
-                } catch (error) {
-                    console.error('Error deleting product:', error);
-                    alert('প্রোডাক্ট মুছে ফেলতে সমস্যা হয়েছে।');
+            if (!confirm('আপনি কি এই প্রোডাক্টটি মুছে ফেলতে চান?')) return;
+
+            try {
+                console.log(`Deleting product: ${id}`);
+                const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'প্রোডাক্ট মুছে ফেলতে সমস্যা হয়েছে।');
                 }
+
+                console.log('Product deleted successfully');
+                alert('প্রোডাক্ট সফলভাবে মুছে ফেলা হয়েছে।');
+                loadProducts();
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert(error.message || 'প্রোডাক্ট মুছে ফেলতে সমস্যা হয়েছে।');
             }
         }
 
@@ -417,7 +460,7 @@
             }
         });
 
-        // Initial Load
+        // Initial load
         loadProducts();
     </script>
 </body>
