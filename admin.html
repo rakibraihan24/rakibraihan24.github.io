@@ -1,343 +1,1661 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>অ্যাডমিন প্যানেল - ডিজিটাল মার্কেট</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/feather-icons"></script>
+    <title>অ্যাডমিন প্যানেল - গিফট কিনবো</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kalpurush&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --accent-color: #FF9800;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --hover-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --danger-color: #f44336;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kalpurush', sans-serif;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
+            margin: 0;
+            padding: 0;
+            font-family: 'Hind Siliguri', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            padding: 0.3rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Admin Container */
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .admin-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .admin-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .admin-header p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .admin-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .dashboard-card h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-card h3 i {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+
+        .dashboard-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-card .label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Orders Section */
+        .orders-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .section-header h2 {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-header h2 i {
+            color: var(--primary-color);
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1rem;
+        }
+
+        .orders-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .orders-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        .orders-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge i {
+            font-size: 0.8rem;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        .status-processing {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-shipped {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-delivered {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn, .delete-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .view-btn {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .delete-btn {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .view-btn:hover, .delete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .view-btn i, .delete-btn i {
+            font-size: 0.9rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #45a049;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-header h2 {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-group {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .detail-group:hover {
+            background: #f1f3f5;
+            transform: translateX(5px);
+        }
+
+        .detail-group h3 {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-group h3 i {
+            color: var(--primary-color);
+        }
+
+        .detail-group p {
+            color: #666;
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        .modal-footer button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .modal-footer button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .cancel-btn {
+            background: #6c757d;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .delete-confirm-btn {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        /* Loading State */
+        #loadingState {
+            text-align: center;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin: 2rem auto;
+            max-width: 400px;
+        }
+
+        #loadingState i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        #loadingState p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 1rem;
+            }
+
+            .admin-header h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard-card {
+                padding: 1.5rem;
+            }
+
+            .dashboard-card .number {
+                font-size: 2rem;
+            }
+
+            .orders-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .view-btn, .delete-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-select:hover {
+            border-color: var(--primary-color);
+        }
+
+        .status-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .status-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .status-option:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .status-option i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .status-option span {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .order-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .detail-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+        }
+
+        .personal-info {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .info-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .info-item:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: #f0f0f0;
+            color: #45a049;
+        }
+
+        .copy-btn.copied {
+            color: #4CAF50;
+        }
+
+        .copy-tooltip {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .copy-tooltip.show {
+            opacity: 1;
+        }
+
+        .info-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .info-item i {
+            color: var(--primary-color);
+            font-size: 1.1em;
+            margin-top: 3px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .info-item div {
+            flex: 1;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 4px;
+        }
+
+        .info-item span {
+            color: #333;
+            font-size: 1em;
+            word-break: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 15px;
+            }
+
+            .detail-card {
+                padding: 15px;
+            }
+
+            .info-group {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .info-item {
+                padding: 10px;
+            }
+
+            .info-item i {
+                font-size: 1em;
+            }
+
+            .info-item strong {
+                font-size: 0.8em;
+            }
+
+            .info-item span {
+                font-size: 0.95em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                width: 100%;
+                margin: 0;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            .detail-card {
+                margin-bottom: 15px;
+            }
+
+            .info-item {
+                padding: 8px;
+            }
+        }
+
+        /* Add new styles */
+        .gift-suggestion {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .gift-suggestion h4 {
+            color: #0d47a1;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .suggest-btn {
+            background: #0d47a1;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            width: 100%;
+            justify-content: center;
+        }
+
+        .suggest-btn:hover {
+            background: #1565c0;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .suggestion-content {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .suggestion-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .copy-section-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
             transition: all 0.3s ease;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+
+        .copy-section-btn:hover {
+            background: #45a049;
+        }
+
+        .copy-section-btn i {
+            font-size: 14px;
+        }
+
+        .copy-section-btn.copied {
+            background: #4CAF50;
+        }
+
+        .section-tooltip {
+            position: absolute;
+            right: 10px;
+            top: -30px;
+            background: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .section-tooltip.show {
+            opacity: 1;
         }
     </style>
 </head>
-<body class="text-white">
-    <!-- Header -->
-    <header class="fixed w-full bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-800">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <a href="index.html" class="text-2xl font-bold font-heading text-white">ডিজিটাল মার্কেট</a>
-
-                <!-- Admin Info -->
-                <div class="flex items-center space-x-4">
-                    <span class="text-slate-300">অ্যাডমিন</span>
-                    <button id="logoutBtn" class="text-slate-300 hover:text-white transition">
-                        <i data-feather="log-out" class="w-5 h-5"></i>
-                    </button>
-                </div>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>অর্ডার ম্যানেজমেন্ট</h1>
+            <div class="admin-actions">
+                <button onclick="window.location.href='index.html'" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> বাড়ি ফিরে যান
+                </button>
             </div>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="pt-32 pb-20 px-4">
-        <div class="container mx-auto">
-            <!-- Dashboard Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div class="glass-card p-6 rounded-xl">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2">মোট প্রোডাক্ট</h3>
-                            <p class="text-3xl font-bold text-sky-400" id="totalProducts">০</p>
-                        </div>
-                        <div class="w-12 h-12 bg-sky-500/20 rounded-lg flex items-center justify-center">
-                            <i data-feather="package" class="w-6 h-6 text-sky-400"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-card p-6 rounded-xl">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2">মোট বিক্রি</h3>
-                            <p class="text-3xl font-bold text-sky-400" id="totalSales">৳০</p>
-                        </div>
-                        <div class="w-12 h-12 bg-sky-500/20 rounded-lg flex items-center justify-center">
-                            <i data-feather="shopping-cart" class="w-6 h-6 text-sky-400"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-card p-6 rounded-xl">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2">মোট ব্যবহারকারী</h3>
-                            <p class="text-3xl font-bold text-sky-400" id="totalUsers">০</p>
-                        </div>
-                        <div class="w-12 h-12 bg-sky-500/20 rounded-lg flex items-center justify-center">
-                            <i data-feather="users" class="w-6 h-6 text-sky-400"></i>
-                        </div>
-                    </div>
-                </div>
+        <div class="dashboard">
+            <div id="loadingState" style="text-align: center; padding: 2rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary-color);"></i>
+                <p style="margin-top: 1rem;">লোড হচ্ছে...</p>
             </div>
-
-            <!-- Product Management -->
-            <div class="glass-card p-6 rounded-xl mb-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold">প্রোডাক্ট ব্যবস্থাপনা</h2>
-                    <button id="addProductBtn" class="btn-primary px-4 py-2 rounded-lg flex items-center">
-                        <i data-feather="plus" class="w-5 h-5 mr-2"></i>
-                        নতুন প্রোডাক্ট
-                    </button>
+            <div id="adminContent" style="display: none;">
+                <div class="admin-header">
+                    <h1>অ্যাডমিন প্যানেল</h1>
+                    <p>আপনার অর্ডারগুলো ম্যানেজ করুন</p>
                 </div>
 
-                <!-- Product List -->
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="text-left border-b border-slate-800">
-                                <th class="pb-4">ছবি</th>
-                                <th class="pb-4">নাম</th>
-                                <th class="pb-4">দাম</th>
-                                <th class="pb-4">রেটিং</th>
-                                <th class="pb-4">অ্যাকশন</th>
-                            </tr>
-                        </thead>
-                        <tbody id="productList">
-                            <!-- Products will be loaded here -->
-                        </tbody>
-                    </table>
+                <!-- Admin Dashboard -->
+                <div class="admin-dashboard">
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-shopping-cart"></i> মোট অর্ডার</h3>
+                        <div class="number" id="totalOrders">0</div>
+                        <div class="label">সব অর্ডারের সংখ্যা</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-clock"></i> পেন্ডিং অর্ডার</h3>
+                        <div class="number" id="pendingOrders">0</div>
+                        <div class="label">অপেক্ষমান অর্ডার</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-truck"></i> প্রসেসিং অর্ডার</h3>
+                        <div class="number" id="processingOrders">0</div>
+                        <div class="label">চলমান অর্ডার</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-check-circle"></i> কমপ্লিট অর্ডার</h3>
+                        <div class="number" id="completedOrders">0</div>
+                        <div class="label">সম্পন্ন অর্ডার</div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </main>
 
-    <!-- Add/Edit Product Modal -->
-    <div id="productModal" class="modal hidden fixed inset-0 bg-black/50 z-50">
-        <div class="container mx-auto px-4 h-full flex items-center justify-center">
-            <div class="glass-card p-8 rounded-xl max-w-2xl w-full">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-bold" id="modalTitle">নতুন প্রোডাক্ট</h3>
-                    <button id="closeModal" class="text-slate-400 hover:text-white">
-                        <i data-feather="x" class="w-6 h-6"></i>
-                    </button>
-                </div>
-                <form id="productForm">
-                    <input type="hidden" id="productId">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">প্রোডাক্টের নাম</label>
-                            <input type="text" id="productName" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">দাম (৳)</label>
-                            <input type="number" id="productPrice" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium mb-2">বিবরণ</label>
-                            <textarea id="productDescription" rows="3" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">ছবি URL</label>
-                            <input type="url" id="productImage" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">রেটিং</label>
-                            <input type="number" id="productRating" step="0.1" min="0" max="5" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium mb-2">বৈশিষ্ট্যসমূহ (প্রতি লাইনে একটি)</label>
-                            <textarea id="productFeatures" rows="4" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition"></textarea>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium mb-2">কি কি পাবেন (প্রতি লাইনে একটি)</label>
-                            <textarea id="productIncludes" rows="4" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition"></textarea>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium mb-2">বিস্তারিত বিবরণ</label>
-                            <textarea id="productFullDescription" rows="6" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition"></textarea>
+                <!-- Orders Section -->
+                <div class="orders-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-list"></i> সব অর্ডার</h2>
+                        <div class="filter-section">
+                            <select id="statusFilter" class="filter-select">
+                                <option value="all">সব স্ট্যাটাস</option>
+                                <option value="pending">পেন্ডিং</option>
+                                <option value="confirmed">অর্ডার কনফার্মড</option>
+                                <option value="processing">প্রসেসিং</option>
+                                <option value="shipped">শিপড</option>
+                                <option value="delivered">ডেলিভারড</option>
+                                <option value="cancelled">ক্যানসেলড</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="mt-6 flex justify-end space-x-4">
-                        <button type="button" id="cancelBtn" class="px-6 py-3 rounded-lg border border-slate-700 hover:border-slate-600 transition">বাতিল</button>
-                        <button type="submit" class="btn-primary px-6 py-3 rounded-lg">সংরক্ষণ</button>
+                    <div id="ordersTableContainer">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>অর্ডার আইডি</th>
+                                    <th>গ্রাহকের নাম</th>
+                                    <th>রিসিভারের নাম</th>
+                                    <th>তারিখ</th>
+                                    <th>স্ট্যাটাস</th>
+                                    <th>অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript -->
-    <script>
-        // Initialize Feather Icons
-        feather.replace();
+    <!-- Order Details Modal -->
+    <div id="orderDetailsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeOrderDetailsModal()">&times;</button>
+            <div class="modal-header">
+                <h2>অর্ডার বিস্তারিত</h2>
+            </div>
+            <div class="modal-body" id="orderDetailsContent">
+                <div class="order-details-grid">
+                    <div class="detail-card">
+                        <div style="position: relative;">
+                            <h3>১. যাকে গিফট দিবেন তার তথ্য</h3>
+                            <button class="copy-section-btn" onclick="copySection('recipient')">
+                                <i class="fas fa-copy"></i> সকল তথ্য কপি করুন
+                            </button>
+                            <span class="section-tooltip">কপি করুন</span>
+                        </div>
+                        <div class="personal-info">
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <i class="fas fa-user"></i>
+                                    <div><strong>নাম:</strong> <span id="recipientName"></span></div>
+                                    <button class="copy-btn" onclick="copyText('recipientName')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div><strong>মোবাইল নম্বর:</strong> <span id="recipientPhone"></span></div>
+                                    <button class="copy-btn" onclick="copyText('recipientPhone')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-venus-mars"></i>
+                                    <div><strong>জেন্ডার:</strong> <span id="recipientGender"></span></div>
+                                    <button class="copy-btn" onclick="copyText('recipientGender')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-heart"></i>
+                                    <div><strong>সম্পর্ক:</strong> <span id="recipientRelation"></span></div>
+                                    <button class="copy-btn" onclick="copyText('recipientRelation')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-birthday-cake"></i>
+                                    <div><strong>বয়স:</strong> <span id="recipientAge"></span></div>
+                                    <button class="copy-btn" onclick="copyText('recipientAge')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item full-width">
+                                    <i class="fas fa-heart"></i>
+                                    <div><strong>পছন্দ-অপছন্দ:</strong> <span id="recipientPreferences"></span></div>
+                                    <button class="copy-btn" onclick="copyText('recipientPreferences')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <div style="position: relative;">
+                            <h3>২. আপনার তথ্য</h3>
+                            <button class="copy-section-btn" onclick="copySection('sender')">
+                                <i class="fas fa-copy"></i> সকল তথ্য কপি করুন
+                            </button>
+                            <span class="section-tooltip">কপি করুন</span>
+                        </div>
+                        <div class="personal-info">
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <i class="fas fa-user"></i>
+                                    <div><strong>নাম:</strong> <span id="senderName"></span></div>
+                                    <button class="copy-btn" onclick="copyText('senderName')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div><strong>মোবাইল নম্বর:</strong> <span id="senderPhone"></span></div>
+                                    <button class="copy-btn" onclick="copyText('senderPhone')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div><strong>ইমেইল:</strong> <span id="userEmail"></span></div>
+                                    <button class="copy-btn" onclick="copyText('userEmail')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <div style="position: relative;">
+                            <h3>৩. কোথায় পাঠাবেন</h3>
+                            <button class="copy-section-btn" onclick="copySection('delivery')">
+                                <i class="fas fa-copy"></i> সকল তথ্য কপি করুন
+                            </button>
+                            <span class="section-tooltip">কপি করুন</span>
+                        </div>
+                        <div class="personal-info">
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <div><strong>ডেলিভারি ঠিকানা:</strong> <span id="deliveryAddress"></span></div>
+                                    <button class="copy-btn" onclick="copyText('deliveryAddress')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div><strong>ডেলিভারি ফোন:</strong> <span id="deliveryPhone"></span></div>
+                                    <button class="copy-btn" onclick="copyText('deliveryPhone')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <div><strong>বাজেট:</strong> <span id="budget"></span> টাকা</div>
+                                    <button class="copy-btn" onclick="copyText('budget')"><i class="fas fa-copy"></i></button>
+                                    <span class="copy-tooltip">কপি করুন</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeOrderDetailsModal()">বন্ধ করুন</button>
+            </div>
+        </div>
+    </div>
 
-        // API Base URL
-        const API_BASE_URL = 'http://localhost:3000/api';
+    <!-- Status Update Modal -->
+    <div id="statusUpdateModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeStatusUpdateModal()">&times;</button>
+            <div class="modal-header">
+                <h2>স্ট্যাটাস আপডেট</h2>
+            </div>
+            <div class="modal-body">
+                <div class="status-options">
+                    <button class="status-option" onclick="updateOrderStatus('pending')">
+                        <i class="fas fa-clock"></i>
+                        <span>পেন্ডিং</span>
+                    </button>
+                    <button class="status-option" onclick="updateOrderStatus('confirmed')">
+                        <i class="fas fa-check"></i>
+                        <span>অর্ডার কনফার্মড</span>
+                    </button>
+                    <button class="status-option" onclick="updateOrderStatus('processing')">
+                        <i class="fas fa-cog"></i>
+                        <span>প্রসেসিং</span>
+                    </button>
+                    <button class="status-option" onclick="updateOrderStatus('shipped')">
+                        <i class="fas fa-truck"></i>
+                        <span>শিপড</span>
+                    </button>
+                    <button class="status-option" onclick="updateOrderStatus('delivered')">
+                        <i class="fas fa-check-circle"></i>
+                        <span>ডেলিভারড</span>
+                    </button>
+                    <button class="status-option" onclick="updateOrderStatus('cancelled')">
+                        <i class="fas fa-times-circle"></i>
+                        <span>ক্যানসেলড</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeStatusUpdateModal()">বাতিল করুন</button>
+            </div>
+        </div>
+    </div>
 
-        // DOM Elements
-        const productModal = document.getElementById('productModal');
-        const addProductBtn = document.getElementById('addProductBtn');
-        const closeModal = document.getElementById('closeModal');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const productForm = document.getElementById('productForm');
-        const productList = document.getElementById('productList');
-        const modalTitle = document.getElementById('modalTitle');
-        const totalProducts = document.getElementById('totalProducts');
-        const totalSales = document.getElementById('totalSales');
-        const totalUsers = document.getElementById('totalUsers');
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getDatabase, ref, onValue, remove, update, get } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+        import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
-        // Show Modal
-        function showModal() {
-            productModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCSyXJeftEfkwQ_FoQlg1sEZ3PZv9xjkLI",
+            authDomain: "gift-kinbo-bd.firebaseapp.com",
+            projectId: "gift-kinbo-bd",
+            storageBucket: "gift-kinbo-bd.firebasestorage.app",
+            messagingSenderId: "896761493540",
+            appId: "1:896761493540:web:21e49df2ca453fb80180b1",
+            measurementId: "G-ZVXSHQT95M",
+            databaseURL: "https://gift-kinbo-bd-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
 
-        // Hide Modal
-        function hideModal() {
-            productModal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            productForm.reset();
-        }
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
-        // Event Listeners
-        addProductBtn.addEventListener('click', () => {
-            modalTitle.textContent = 'নতুন প্রোডাক্ট';
-            document.getElementById('productId').value = '';
-            showModal();
+        // Show loading state
+        document.getElementById('loadingState').style.display = 'block';
+        document.getElementById('adminContent').style.display = 'none';
+
+        // Add sign in button to header
+        const navLinks = document.querySelector('.nav-links');
+        const signInButton = document.createElement('button');
+        signInButton.id = 'signInButton';
+        signInButton.className = 'auth-button';
+        signInButton.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">';
+        navLinks.insertBefore(signInButton, navLinks.firstChild);
+
+        // Sign in with Google
+        signInButton.addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                console.log('Successfully signed in:', result.user.email);
+            } catch (error) {
+                console.error('Error signing in:', error);
+                alert('দুঃখিত, সাইন ইন করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+            }
         });
 
-        closeModal.addEventListener('click', hideModal);
-        cancelBtn.addEventListener('click', hideModal);
-
-        // Load Products
-        async function loadProducts() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/products`);
-                const products = await response.json();
+        // Check authentication state
+        onAuthStateChanged(auth, (user) => {
+            console.log('Auth state changed:', user ? 'User is signed in' : 'User is signed out');
+            
+            if (user) {
+                // User is signed in
+                console.log('User details:', user.email, user.displayName);
                 
-                productList.innerHTML = '';
-                products.forEach(product => {
+                // Check if user is authorized admin
+                if (user.email === 'giftkinbobd@gmail.com') {
+                    // Show user profile and hide sign in button
+                    document.getElementById('userProfile').style.display = 'flex';
+                    document.getElementById('userPhoto').src = user.photoURL;
+                    document.getElementById('userName').textContent = user.displayName;
+                    signInButton.style.display = 'none';
+                    
+                    // Show admin content
+                    document.getElementById('loadingState').style.display = 'none';
+                    document.getElementById('adminContent').style.display = 'block';
+                    
+                    // Load orders
+                    loadOrders();
+                } else {
+                    // Unauthorized user
+                    alert('দুঃখিত, আপনার অ্যাডমিন প্যানেল অ্যাক্সেস করার অনুমতি নেই।');
+                    signOut(auth).then(() => {
+                        window.location.href = 'index.html';
+                    });
+                }
+            } else {
+                // User is signed out
+                console.log('User is not signed in, showing sign in button');
+                
+                // Show sign in button and hide user profile
+                signInButton.style.display = 'flex';
+                document.getElementById('userProfile').style.display = 'none';
+                
+                // Show loading state and hide admin content
+                document.getElementById('loadingState').style.display = 'block';
+                document.getElementById('adminContent').style.display = 'none';
+            }
+        });
+
+        // Sign out functionality
+        document.getElementById('userProfile').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                console.log('Successfully signed out');
+            } catch (error) {
+                console.error('Error signing out:', error);
+                alert('দুঃখিত, সাইন আউট করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+            }
+        });
+
+        let currentOrderId = null;
+
+        // Load orders with status filter
+        function loadOrders(status = 'all') {
+            const ordersRef = ref(database, 'orders');
+            onValue(ordersRef, (snapshot) => {
+                const orders = [];
+                snapshot.forEach((childSnapshot) => {
+                    const order = childSnapshot.val();
+                    if (status === 'all' || order.status === status) {
+                        orders.push({
+                            id: childSnapshot.key,
+                            ...order
+                        });
+                    }
+                });
+
+                // Sort orders by date
+                orders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+
+                // Update dashboard numbers
+                updateDashboardNumbers(orders);
+
+                // Update table
+                const tableBody = document.getElementById('ordersTableBody');
+                tableBody.innerHTML = '';
+
+                orders.forEach(order => {
                     const row = document.createElement('tr');
-                    row.className = 'border-b border-slate-800';
                     row.innerHTML = `
-                        <td class="py-4">
-                            <img src="${product.image}" alt="${product.title}" class="w-16 h-16 object-cover rounded-lg">
+                        <td>${order.id}</td>
+                        <td>${order.customerName || 'N/A'}</td>
+                        <td>${order.recipientName}</td>
+                        <td>${formatDate(order.orderDate)}</td>
+                        <td>
+                            <span class="status-badge status-${order.status}">
+                                <i class="fas ${getStatusIcon(order.status)}"></i>
+                                ${getStatusText(order.status)}
+                            </span>
                         </td>
-                        <td class="py-4">${product.title}</td>
-                        <td class="py-4">৳${product.price}</td>
-                        <td class="py-4">${product.rating} ⭐</td>
-                        <td class="py-4">
-                            <div class="flex space-x-2">
-                                <button onclick="editProduct('${product._id}')" class="p-2 rounded-lg border border-slate-700 hover:border-slate-600 transition">
-                                    <i data-feather="edit" class="w-4 h-4"></i>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="view-btn" onclick="viewOrderDetails('${order.id}')">
+                                    <i class="fas fa-eye"></i> বিস্তারিত
                                 </button>
-                                <button onclick="deleteProduct('${product._id}')" class="p-2 rounded-lg border border-slate-700 hover:border-slate-600 transition text-red-400">
-                                    <i data-feather="trash-2" class="w-4 h-4"></i>
+                                <button class="update-btn" onclick="openStatusUpdateModal('${order.id}')">
+                                    <i class="fas fa-edit"></i> স্ট্যাটাস
+                                </button>
+                                <button class="delete-btn" onclick="deleteOrder('${order.id}')">
+                                    <i class="fas fa-trash"></i> ডিলিট
                                 </button>
                             </div>
                         </td>
                     `;
-                    productList.appendChild(row);
+                    tableBody.appendChild(row);
                 });
-                
-                // Update stats
-                totalProducts.textContent = products.length;
-                const totalSalesAmount = products.reduce((sum, product) => sum + product.price, 0);
-                totalSales.textContent = `৳${totalSalesAmount}`;
-                
-                feather.replace();
-            } catch (error) {
-                console.error('Error loading products:', error);
-                alert('প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
-            }
+            });
         }
 
-        // Edit Product
-        async function editProduct(id) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/products/${id}`);
-                const product = await response.json();
-                
-                modalTitle.textContent = 'প্রোডাক্ট সম্পাদনা';
-                document.getElementById('productId').value = product._id;
-                document.getElementById('productName').value = product.title;
-                document.getElementById('productPrice').value = product.price;
-                document.getElementById('productDescription').value = product.description;
-                document.getElementById('productImage').value = product.image;
-                document.getElementById('productRating').value = product.rating;
-                document.getElementById('productFeatures').value = product.features.join('\n');
-                document.getElementById('productIncludes').value = product.includes.join('\n');
-                document.getElementById('productFullDescription').value = product.fullDescription;
-                showModal();
-            } catch (error) {
-                console.error('Error loading product:', error);
-                alert('প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
-            }
+        // Update dashboard numbers
+        function updateDashboardNumbers(orders) {
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('pendingOrders').textContent = orders.filter(o => o.status === 'pending').length;
+            document.getElementById('processingOrders').textContent = orders.filter(o => o.status === 'processing').length;
+            document.getElementById('completedOrders').textContent = orders.filter(o => o.status === 'delivered').length;
         }
 
-        // Delete Product
-        async function deleteProduct(id) {
-            if (confirm('আপনি কি এই প্রোডাক্টটি মুছে ফেলতে চান?')) {
-                try {
-                    await fetch(`${API_BASE_URL}/products/${id}`, {
-                        method: 'DELETE'
-                    });
-                    loadProducts();
-                } catch (error) {
-                    console.error('Error deleting product:', error);
-                    alert('প্রোডাক্ট মুছে ফেলতে সমস্যা হয়েছে।');
+        // View order details
+        window.viewOrderDetails = function(orderId) {
+            const orderRef = ref(database, `orders/${orderId}`);
+            onValue(orderRef, (snapshot) => {
+                const order = snapshot.val();
+                if (order) {
+                    const detailsContent = document.getElementById('orderDetailsContent');
+                    detailsContent.innerHTML = `
+                        <div class="order-details-grid">
+                            <div class="detail-card">
+                                <h3>১. যাকে গিফট দিবেন তার তথ্য</h3>
+                                <div class="personal-info">
+                                    <div class="info-group">
+                                        <div class="info-item">
+                                            <i class="fas fa-user"></i>
+                                            <div><strong>নাম:</strong> <span id="recipientName"></span></div>
+                                            <button class="copy-btn" onclick="copyText('recipientName')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-phone"></i>
+                                            <div><strong>মোবাইল নম্বর:</strong> <span id="recipientPhone"></span></div>
+                                            <button class="copy-btn" onclick="copyText('recipientPhone')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-venus-mars"></i>
+                                            <div><strong>জেন্ডার:</strong> <span id="recipientGender"></span></div>
+                                            <button class="copy-btn" onclick="copyText('recipientGender')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-heart"></i>
+                                            <div><strong>সম্পর্ক:</strong> <span id="recipientRelation"></span></div>
+                                            <button class="copy-btn" onclick="copyText('recipientRelation')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-birthday-cake"></i>
+                                            <div><strong>বয়স:</strong> <span id="recipientAge"></span></div>
+                                            <button class="copy-btn" onclick="copyText('recipientAge')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item full-width">
+                                            <i class="fas fa-heart"></i>
+                                            <div><strong>পছন্দ-অপছন্দ:</strong> <span id="recipientPreferences"></span></div>
+                                            <button class="copy-btn" onclick="copyText('recipientPreferences')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-card">
+                                <h3>২. আপনার তথ্য</h3>
+                                <div class="personal-info">
+                                    <div class="info-group">
+                                        <div class="info-item">
+                                            <i class="fas fa-user"></i>
+                                            <div><strong>নাম:</strong> <span id="senderName"></span></div>
+                                            <button class="copy-btn" onclick="copyText('senderName')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-phone"></i>
+                                            <div><strong>মোবাইল নম্বর:</strong> <span id="senderPhone"></span></div>
+                                            <button class="copy-btn" onclick="copyText('senderPhone')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <div><strong>ইমেইল:</strong> <span id="userEmail"></span></div>
+                                            <button class="copy-btn" onclick="copyText('userEmail')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-card">
+                                <h3>৩. কোথায় পাঠাবেন</h3>
+                                <div class="personal-info">
+                                    <div class="info-group">
+                                        <div class="info-item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <div><strong>ডেলিভারি ঠিকানা:</strong> <span id="deliveryAddress"></span></div>
+                                            <button class="copy-btn" onclick="copyText('deliveryAddress')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-phone"></i>
+                                            <div><strong>ডেলিভারি ফোন:</strong> <span id="deliveryPhone"></span></div>
+                                            <button class="copy-btn" onclick="copyText('deliveryPhone')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                            <div><strong>বাজেট:</strong> <span id="budget"></span> টাকা</div>
+                                            <button class="copy-btn" onclick="copyText('budget')"><i class="fas fa-copy"></i></button>
+                                            <span class="copy-tooltip">কপি করুন</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('orderDetailsModal').style.display = 'block';
+                    showOrderDetails(order);
                 }
-            }
-        }
+            });
+        };
 
-        // Form Submit
-        productForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = {
-                title: document.getElementById('productName').value,
-                price: Number(document.getElementById('productPrice').value),
-                description: document.getElementById('productDescription').value,
-                image: document.getElementById('productImage').value,
-                rating: Number(document.getElementById('productRating').value),
-                features: document.getElementById('productFeatures').value.split('\n').filter(f => f.trim()),
-                includes: document.getElementById('productIncludes').value.split('\n').filter(i => i.trim()),
-                fullDescription: document.getElementById('productFullDescription').value
-            };
+        // Close order details modal
+        window.closeOrderDetailsModal = function() {
+            document.getElementById('orderDetailsModal').style.display = 'none';
+        };
 
-            const productId = document.getElementById('productId').value;
-            const method = productId ? 'PUT' : 'POST';
-            const url = productId ? `${API_BASE_URL}/products/${productId}` : `${API_BASE_URL}/products`;
+        // Open status update modal
+        window.openStatusUpdateModal = function(orderId) {
+            currentOrderId = orderId;
+            document.getElementById('statusUpdateModal').style.display = 'block';
+        };
 
-            try {
-                const response = await fetch(url, {
-                    method,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
+        // Close status update modal
+        window.closeStatusUpdateModal = function() {
+            document.getElementById('statusUpdateModal').style.display = 'none';
+            currentOrderId = null;
+        };
+
+        // Update order status
+        window.updateOrderStatus = function(newStatus) {
+            if (currentOrderId) {
+                const orderRef = ref(database, `orders/${currentOrderId}`);
+                update(orderRef, {
+                    status: newStatus,
+                    lastUpdated: new Date().toISOString()
+                }).then(() => {
+                    alert('স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!');
+                    closeStatusUpdateModal();
+                }).catch((error) => {
+                    console.error('Error updating status:', error);
+                    alert('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে।');
                 });
-
-                if (!response.ok) {
-                    throw new Error('Failed to save product');
-                }
-
-                hideModal();
-                loadProducts();
-            } catch (error) {
-                console.error('Error saving product:', error);
-                alert('প্রোডাক্ট সংরক্ষণ করতে সমস্যা হয়েছে।');
             }
+        };
+
+        // Delete order
+        window.deleteOrder = function(orderId) {
+            if (confirm('আপনি কি নিশ্চিত যে আপনি এই অর্ডারটি ডিলিট করতে চান?')) {
+                const orderRef = ref(database, `orders/${orderId}`);
+                remove(orderRef).then(() => {
+                    alert('অর্ডার সফলভাবে ডিলিট করা হয়েছে!');
+                }).catch((error) => {
+                    console.error('Error deleting order:', error);
+                    alert('অর্ডার ডিলিট করতে সমস্যা হয়েছে।');
+                });
+            }
+        };
+
+        // Status filter change
+        document.getElementById('statusFilter').addEventListener('change', (e) => {
+            loadOrders(e.target.value);
         });
 
-        // Initial Load
-        loadProducts();
+        // Helper functions
+        function formatDate(dateString) {
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString('bn-BD', options);
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'পেন্ডিং',
+                'confirmed': 'অর্ডার কনফার্মড',
+                'processing': 'প্রসেসিং',
+                'shipped': 'শিপড',
+                'delivered': 'ডেলিভারড',
+                'cancelled': 'ক্যানসেলড'
+            };
+            return statusMap[status] || status;
+        }
+
+        function getStatusIcon(status) {
+            const iconMap = {
+                'pending': 'fa-clock',
+                'confirmed': 'fa-check',
+                'processing': 'fa-cog',
+                'shipped': 'fa-truck',
+                'delivered': 'fa-check-circle',
+                'cancelled': 'fa-times-circle'
+            };
+            return iconMap[status] || 'fa-question-circle';
+        }
+
+        // Add new function for gift suggestion
+        window.getGiftSuggestion = async function(orderId) {
+            const orderRef = ref(database, `orders/${orderId}`);
+            const snapshot = await get(orderRef);
+            const order = snapshot.val();
+            
+            if (order) {
+                const suggestionContent = document.getElementById(`giftSuggestion-${orderId}`);
+                suggestionContent.innerHTML = '<div class="loading">লোড হচ্ছে...</div>';
+                suggestionContent.classList.add('active');
+
+                // Prepare data for ChatGPT
+                const recipientInfo = {
+                    name: order.recipientName,
+                    age: order.recipientAge,
+                    gender: order.recipientGender === 'male' ? 'পুরুষ' : 'মহিলা',
+                    relationship: order.relationship,
+                    preferences: order.preferences,
+                    budget: order.budget
+                };
+
+                try {
+                    // Here you would make the API call to ChatGPT
+                    // For now, we'll show a placeholder message
+                    const suggestion = await generateGiftSuggestion(recipientInfo);
+                    suggestionContent.innerHTML = `
+                        <div class="suggestion-result">
+                            <h5>প্রস্তাবিত গিফটসমূহ:</h5>
+                            <div class="suggestion-list">
+                                ${suggestion}
+                            </div>
+                        </div>
+                    `;
+                } catch (error) {
+                    suggestionContent.innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            গিফট সাজেশন লোড করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।
+                        </div>
+                    `;
+                }
+            }
+        };
+
+        // Placeholder function for ChatGPT integration
+        async function generateGiftSuggestion(recipientInfo) {
+            // This is where you would integrate with ChatGPT API
+            // For now, returning a placeholder suggestion
+            return `
+                <ul>
+                    <li>বয়স এবং লিঙ্গ অনুযায়ী উপযুক্ত গিফট আইডিয়া</li>
+                    <li>সম্পর্ক অনুযায়ী পার্সোনালাইজড গিফট</li>
+                    <li>পছন্দ অনুযায়ী কাস্টমাইজড আইডিয়া</li>
+                    <li>বাজেট অনুযায়ী সাজেশন</li>
+                </ul>
+            `;
+        }
+
+        function showOrderDetails(order) {
+            document.getElementById('recipientName').textContent = order.recipientName || 'N/A';
+            document.getElementById('recipientPhone').textContent = order.recipientPhone || 'N/A';
+            document.getElementById('recipientGender').textContent = order.recipientGender === 'male' ? 'পুরুষ' : order.recipientGender === 'female' ? 'মহিলা' : 'N/A';
+            document.getElementById('recipientRelation').textContent = order.relationship || 'N/A';
+            document.getElementById('recipientAge').textContent = order.recipientAge || 'N/A';
+            document.getElementById('recipientPreferences').textContent = order.preferences || 'N/A';
+            document.getElementById('senderName').textContent = order.customerName || 'N/A';
+            document.getElementById('senderPhone').textContent = order.customerPhone || 'N/A';
+            document.getElementById('userEmail').textContent = order.userEmail || 'N/A';
+            document.getElementById('deliveryAddress').textContent = order.deliveryAddress || 'N/A';
+            document.getElementById('deliveryPhone').textContent = order.deliveryPhone || 'N/A';
+            document.getElementById('budget').textContent = order.budget || 'N/A';
+        }
+
+        function copyText(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            const tooltip = element.parentElement.querySelector('.copy-tooltip');
+            const copyBtn = element.parentElement.querySelector('.copy-btn');
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Show copied tooltip
+                tooltip.textContent = 'কপি করা হয়েছে!';
+                tooltip.classList.add('show');
+                
+                // Change button icon
+                copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                copyBtn.classList.add('copied');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    tooltip.textContent = 'কপি করুন';
+                    tooltip.classList.remove('show');
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                tooltip.textContent = 'কপি করতে ব্যর্থ!';
+                tooltip.classList.add('show');
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 2000);
+            });
+        }
+
+        function copySection(section) {
+            let text = '';
+            const tooltip = document.querySelector(`.detail-card:nth-child(${getSectionIndex(section)}) .section-tooltip`);
+            const button = document.querySelector(`.detail-card:nth-child(${getSectionIndex(section)}) .copy-section-btn`);
+            
+            switch(section) {
+                case 'recipient':
+                    text = `যাকে গিফট দিবেন তার তথ্য:\n`;
+                    text += `নাম: ${document.getElementById('recipientName').textContent}\n`;
+                    text += `মোবাইল নম্বর: ${document.getElementById('recipientPhone').textContent}\n`;
+                    text += `জেন্ডার: ${document.getElementById('recipientGender').textContent}\n`;
+                    text += `সম্পর্ক: ${document.getElementById('recipientRelation').textContent}\n`;
+                    text += `বয়স: ${document.getElementById('recipientAge').textContent}\n`;
+                    text += `পছন্দ-অপছন্দ: ${document.getElementById('recipientPreferences').textContent}`;
+                    break;
+                case 'sender':
+                    text = `আপনার তথ্য:\n`;
+                    text += `নাম: ${document.getElementById('senderName').textContent}\n`;
+                    text += `মোবাইল নম্বর: ${document.getElementById('senderPhone').textContent}\n`;
+                    text += `ইমেইল: ${document.getElementById('userEmail').textContent}`;
+                    break;
+                case 'delivery':
+                    text = `কোথায় পাঠাবেন:\n`;
+                    text += `ডেলিভারি ঠিকানা: ${document.getElementById('deliveryAddress').textContent}\n`;
+                    text += `ডেলিভারি ফোন: ${document.getElementById('deliveryPhone').textContent}\n`;
+                    text += `বাজেট: ${document.getElementById('budget').textContent} টাকা`;
+                    break;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Show copied tooltip
+                tooltip.textContent = 'সকল তথ্য কপি করা হয়েছে!';
+                tooltip.classList.add('show');
+                
+                // Change button icon
+                button.innerHTML = '<i class="fas fa-check"></i> কপি করা হয়েছে';
+                button.classList.add('copied');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    tooltip.textContent = 'কপি করুন';
+                    tooltip.classList.remove('show');
+                    button.innerHTML = '<i class="fas fa-copy"></i> সকল তথ্য কপি করুন';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                tooltip.textContent = 'কপি করতে ব্যর্থ!';
+                tooltip.classList.add('show');
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 2000);
+            });
+        }
+
+        function getSectionIndex(section) {
+            switch(section) {
+                case 'recipient': return 1;
+                case 'sender': return 2;
+                case 'delivery': return 3;
+                default: return 1;
+            }
+        }
     </script>
 </body>
-</html>
+</html> 

@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার অর্ডারসমূহ - গিফট কিনবো</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kalpurush&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --accent-color: #FFE66D;
+            --text-color: #2C3E50;
+            --light-bg: #F7F9FC;
+            --white: #FFFFFF;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kalpurush', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            padding: 0.3rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Auth Button Styles */
+        .auth-container {
+            display: flex;
+            align-items: center;
+            margin-left: 0.5rem;
+        }
+
+        .auth-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            border: 1px solid #dadce0;
+            border-radius: 50%;
+            background-color: var(--white);
+            color: #3c4043;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 1px 2px rgba(60,64,67,.08);
+            text-decoration: none;
+            font-family: 'Google Sans', 'Kalpurush', sans-serif;
+            width: 36px;
+            height: 36px;
+        }
+
+        .auth-button img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-profile img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #eee;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            color: #3c4043;
+            font-weight: 500;
+        }
+
+        /* Orders Container Styles */
+        .orders-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            min-height: calc(100vh - 60px);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .orders-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .orders-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .orders-header p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .orders-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* Order Card Styles */
+        .order-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .order-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .order-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ff8f8f 100%);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .order-header h3 {
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-header h3 i {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .order-date {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .order-date i {
+            font-size: 0.9rem;
+        }
+
+        .order-details {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            background: var(--white);
+        }
+
+        .detail-group {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .detail-group:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-group h4 {
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            border-bottom: 2px solid rgba(255, 107, 107, 0.2);
+            padding-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .detail-group h4 i {
+            color: var(--primary-color);
+            opacity: 0.8;
+        }
+
+        .detail-group p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .detail-group p:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-group strong {
+            color: var(--text-color);
+            opacity: 0.9;
+            min-width: 120px;
+            font-weight: 600;
+        }
+
+        /* Order Status Styles */
+        .order-status {
+            padding: 1rem 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .order-status i {
+            font-size: 1.1rem;
+        }
+
+        .order-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .order-status.processing {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .order-status.shipped {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .order-status.delivered {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .order-status.cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Order Actions */
+        .order-actions {
+            padding: 1.2rem;
+            background: var(--light-bg);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .order-action-btn {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 500;
+        }
+
+        .order-action-btn i {
+            font-size: 1rem;
+        }
+
+        .order-action-btn.delete {
+            background: #dc3545;
+            color: white;
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+        }
+
+        .order-action-btn.delete:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Status Update Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .modal-header h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .status-option {
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .status-option:hover {
+            background: var(--light-bg);
+            transform: translateY(-2px);
+        }
+
+        .status-option.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+        }
+
+        .status-option i {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .modal-btn.cancel {
+            background: #eee;
+            color: var(--text-color);
+        }
+
+        .modal-btn.cancel:hover {
+            background: #ddd;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn.save {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);
+        }
+
+        .modal-btn.save:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Loading and Error States */
+        .loading, .error {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .loading i, .error i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .loading p, .error p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .orders-header h1 {
+                font-size: 2rem;
+            }
+
+            .orders-header p {
+                font-size: 1rem;
+            }
+
+            .order-details {
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .detail-group {
+                padding: 1.2rem;
+            }
+
+            .order-actions {
+                flex-direction: column;
+            }
+
+            .order-action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+
+            .status-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>গিফট কিনবো</h1>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="index.html">হোম</a>
+                <a href="index.html#how-it-works">কিভাবে অর্ডার করবেন</a>
+                <a href="index.html#trust">আমাদের সম্পর্কে</a>
+                <a href="index.html#order">অর্ডার করুন</a>
+                <a href="index.html#contact">যোগাযোগ</a>
+                <div class="auth-container">
+                    <button id="signInButton" class="auth-button">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                    </button>
+                    <div id="userProfile" class="user-profile" style="display: none;">
+                        <img id="userPhoto" src="" alt="User Photo">
+                        <span id="userName" class="user-name"></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Orders Section -->
+    <div class="orders-container">
+        <div class="orders-header">
+            <h1>আমার অর্ডারসমূহ</h1>
+            <p>আপনার সব অর্ডারের তালিকা এখানে দেখতে পাবেন</p>
+        </div>
+        <div id="ordersContainer">
+            <!-- Orders will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 গিফট কিনবো। সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+        import { getDatabase, ref, onValue, query, orderByChild, update, remove } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCSyXJeftEfkwQ_FoQlg1sEZ3PZv9xjkLI",
+            authDomain: "gift-kinbo-bd.firebaseapp.com",
+            projectId: "gift-kinbo-bd",
+            storageBucket: "gift-kinbo-bd.firebasestorage.app",
+            messagingSenderId: "896761493540",
+            appId: "1:896761493540:web:21e49df2ca453fb80180b1",
+            measurementId: "G-ZVXSHQT95M",
+            databaseURL: "https://gift-kinbo-bd-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Auth state observer
+        onAuthStateChanged(auth, (user) => {
+            const signInButton = document.getElementById('signInButton');
+            const userProfile = document.getElementById('userProfile');
+            const userPhoto = document.getElementById('userPhoto');
+            const userName = document.getElementById('userName');
+            const ordersContainer = document.getElementById('ordersContainer');
+
+            if (user) {
+                console.log('User is signed in:', user.email);
+                signInButton.style.display = 'none';
+                userProfile.style.display = 'flex';
+                userPhoto.src = user.photoURL;
+                userName.textContent = user.displayName;
+
+                // Load orders for the current user
+                loadUserOrders(user.uid);
+            } else {
+                console.log('User is signed out');
+                signInButton.style.display = 'flex';
+                userProfile.style.display = 'none';
+                ordersContainer.innerHTML = '<p class="no-orders">অনুগ্রহ করে অর্ডার দেখার জন্য সাইন ইন করুন।</p>';
+            }
+        });
+
+        // Function to load user orders
+        function loadUserOrders(userId) {
+            const ordersContainer = document.getElementById('ordersContainer');
+            ordersContainer.innerHTML = '<div class="loading">অর্ডার লোড হচ্ছে...</div>';
+
+            console.log('Loading orders for user:', userId);
+
+            try {
+                const ordersRef = ref(database, 'orders');
+                console.log('Orders reference created');
+
+                // Remove the query for now to test if we can get all orders
+                onValue(ordersRef, (snapshot) => {
+                    console.log('Orders snapshot received:', snapshot.exists());
+                    
+                    if (!snapshot.exists()) {
+                        console.log('No orders found in database');
+                        ordersContainer.innerHTML = '<p class="no-orders">আপনার কোন অর্ডার নেই।</p>';
+                        return;
+                    }
+
+                    const orders = [];
+                    snapshot.forEach((childSnapshot) => {
+                        const order = childSnapshot.val();
+                        console.log('Processing order:', order);
+                        
+                        // Check if userId matches
+                        if (order.userId === userId) {
+                            console.log('Order belongs to current user');
+                            orders.push({
+                                id: childSnapshot.key,
+                                ...order
+                            });
+                        } else {
+                            console.log('Order belongs to different user:', order.userId);
+                        }
+                    });
+
+                    console.log('Total orders found:', orders.length);
+
+                    if (orders.length === 0) {
+                        console.log('No orders found for current user');
+                        ordersContainer.innerHTML = '<p class="no-orders">আপনার কোন অর্ডার নেই।</p>';
+                        return;
+                    }
+
+                    // Sort orders by date (newest first)
+                    orders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+
+                    // Display orders
+                    const ordersHTML = orders.map(order => `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <h3><i class="fas fa-box"></i> অর্ডার #${order.id.slice(-6)}</h3>
+                                <span class="order-date"><i class="far fa-clock"></i> ${formatDate(order.orderDate)}</span>
+                            </div>
+                            <div class="order-details">
+                                <div class="detail-group">
+                                    <h4><i class="fas fa-user"></i> প্রাপকের তথ্য</h4>
+                                    <p><strong>নাম:</strong> ${order.recipientName}</p>
+                                    <p><strong>ফোন:</strong> ${order.recipientPhone}</p>
+                                    <p><strong>বয়স:</strong> ${order.recipientAge}</p>
+                                    <p><strong>লিঙ্গ:</strong> ${order.recipientGender === 'male' ? 'পুরুষ' : 'মহিলা'}</p>
+                                    <p><strong>সম্পর্ক:</strong> ${order.relationship}</p>
+                                </div>
+                                <div class="detail-group">
+                                    <h4><i class="fas fa-shopping-bag"></i> অর্ডার তথ্য</h4>
+                                    <p><strong>বাজেট:</strong> ৳${order.budget}</p>
+                                    <p><strong>পছন্দ-অপছন্দ:</strong> ${order.preferences || 'উল্লেখ করা হয়নি'}</p>
+                                </div>
+                                <div class="detail-group">
+                                    <h4><i class="fas fa-truck"></i> ডেলিভারি তথ্য</h4>
+                                    <p><strong>ঠিকানা:</strong> ${order.deliveryAddress}</p>
+                                    <p><strong>কন্টাক্ট:</strong> ${order.deliveryPhone}</p>
+                                </div>
+                            </div>
+                            <div class="order-status ${order.status}">
+                                <i class="fas ${getStatusIcon(order.status)}"></i>
+                                ${getStatusText(order.status)}
+                            </div>
+                            <div class="order-actions">
+                                <button class="order-action-btn delete" onclick="deleteOrder('${order.id}')">
+                                    <i class="fas fa-times-circle"></i> অর্ডার বাতিল করুন
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    console.log('Generated HTML for orders');
+                    ordersContainer.innerHTML = ordersHTML;
+                    console.log('Orders displayed successfully');
+
+                }, (error) => {
+                    console.error('Error in onValue callback:', error);
+                    ordersContainer.innerHTML = '<p class="error">অর্ডার লোড করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।</p>';
+                });
+
+            } catch (error) {
+                console.error('Error in loadUserOrders:', error);
+                ordersContainer.innerHTML = '<p class="error">অর্ডার লোড করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।</p>';
+            }
+        }
+
+        // Helper function to format date
+        function formatDate(dateString) {
+            try {
+                const options = { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                return new Date(dateString).toLocaleDateString('bn-BD', options);
+            } catch (error) {
+                console.error('Error formatting date:', error);
+                return dateString;
+            }
+        }
+
+        // Helper function to get status text
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'অপেক্ষমান',
+                'processing': 'প্রক্রিয়াধীন',
+                'shipped': 'পাঠানো হয়েছে',
+                'delivered': 'ডেলিভারি সম্পন্ন',
+                'cancelled': 'বাতিল'
+            };
+            return statusMap[status] || status;
+        }
+
+        // Helper function to get status icon
+        function getStatusIcon(status) {
+            const iconMap = {
+                'pending': 'fa-clock',
+                'processing': 'fa-cog',
+                'shipped': 'fa-truck',
+                'delivered': 'fa-check-circle',
+                'cancelled': 'fa-times-circle'
+            };
+            return iconMap[status] || 'fa-question-circle';
+        }
+
+        // Sign in with Google
+        document.getElementById('signInButton').addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                console.log('Successfully signed in:', result.user.email);
+            } catch (error) {
+                console.error('Error signing in:', error);
+                alert('দুঃখিত, সাইন ইন করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+            }
+        });
+
+        // Sign out
+        document.getElementById('userProfile').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                console.log('Successfully signed out');
+            } catch (error) {
+                console.error('Error signing out:', error);
+                alert('দুঃখিত, সাইন আউট করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+            }
+        });
+
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('nav')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+        });
+
+        // Status update modal functions
+        let currentOrderId = null;
+        let currentStatus = null;
+
+        function openStatusModal(orderId, status) {
+            currentOrderId = orderId;
+            currentStatus = status;
+            const modal = document.getElementById('statusModal');
+            const options = modal.querySelectorAll('.status-option');
+            
+            options.forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.status === status) {
+                    option.classList.add('active');
+                }
+            });
+
+            modal.classList.add('active');
+        }
+
+        function closeStatusModal() {
+            const modal = document.getElementById('statusModal');
+            modal.classList.remove('active');
+            currentOrderId = null;
+            currentStatus = null;
+        }
+
+        // Add click event listeners to status options
+        document.querySelectorAll('.status-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.status-option').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                currentStatus = option.dataset.status;
+            });
+        });
+
+        async function updateOrderStatus() {
+            if (!currentOrderId || !currentStatus) return;
+
+            try {
+                const orderRef = ref(database, `orders/${currentOrderId}`);
+                await update(orderRef, { status: currentStatus });
+                closeStatusModal();
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                alert('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+            }
+        }
+
+        async function deleteOrder(orderId) {
+            if (!confirm('আপনি কি নিশ্চিত যে এই অর্ডারটি বাতিল করতে চান?')) return;
+
+            try {
+                const orderRef = ref(database, `orders/${orderId}`);
+                await remove(orderRef);
+            } catch (error) {
+                console.error('Error deleting order:', error);
+                alert('অর্ডার বাতিল করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+            }
+        }
+    </script>
+</body>
+</html> 
