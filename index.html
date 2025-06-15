@@ -1,646 +1,447 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="বাংলাদেশের সেরা গিফট ডেলিভারি সার্ভিস। জন্মদিন, বিবাহ বার্ষিকী, বা যে কোন উপলক্ষে প্রিয়জনদের জন্য বিশেষ গিফট। পণ্য হাতে পেয়ে তারপর টাকা দিন।">
-    <meta name="keywords" content="গিফট, উপহার, জন্মদিনের গিফট, বিবাহ বার্ষিকীর গিফট, গিফট ডেলিভারি, ক্যাশ অন ডেলিভারি, বাংলাদেশ গিফট, অনলাইন গিফট, বিশেষ উপহার">
-    <meta name="author" content="Gift Kinbo">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="গিফট কিনবো - আপনার প্রিয়জনদের জন্য সেরা উপহার">
-    <meta property="og:description" content="বাংলাদেশের সেরা গিফট ডেলিভারি সার্ভিস। জন্মদিন, বিবাহ বার্ষিকী, বা যে কোন উপলক্ষে প্রিয়জনদের জন্য বিশেষ গিফট।">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://giftkinbo.com">
-    <meta name="twitter:card" content="summary_large_image">
-    <title>গিফট কিনবো - আপনার প্রিয়জনদের জন্য সেরা উপহার | জন্মদিন, বিবাহ বার্ষিকীর গিফট</title>
-    <link rel="canonical" href="https://giftkinbo.com">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kalpurush&display=swap" rel="stylesheet">
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "গিফট কিনবো",
-        "image": "https://giftkinbo.com/images/logo.png",
-        "description": "বাংলাদেশের সেরা গিফট ডেলিভারি সার্ভিস। জন্মদিন, বিবাহ বার্ষিকী, বা যে কোন উপলক্ষে প্রিয়জনদের জন্য বিশেষ গিফট।",
-        "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "BD"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "23.8103",
-            "longitude": "90.4125"
-        },
-        "url": "https://giftkinbo.com",
-        "telephone": "+8801745897322",
-        "priceRange": "৳৳",
-        "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday"
-            ],
-            "opens": "09:00",
-            "closes": "21:00"
-        },
-        "sameAs": [
-            "https://facebook.com/giftkinbobd"
-        ]
-    }
-    </script>
+    <title>DigitalMarket - বাংলাদেশের সেরা ডিজিটাল মার্কেটপ্লেস</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #FF6B6B;
-            --secondary-color: #4ECDC4;
-            --accent-color: #FFE66D;
-            --text-color: #2C3E50;
-            --light-bg: #F7F9FC;
-            --white: #FFFFFF;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Kalpurush', sans-serif;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* Header Styles */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            padding: 0.5rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            transition: all 0.3s ease;
         }
-
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo h1 {
-            color: var(--primary-color);
-            font-size: 1.3rem;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            padding: 0.3rem 0;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Auth Button Styles */
-        .auth-container {
-            display: flex;
-            align-items: center;
-            margin-left: 0.5rem;
-        }
-
-        .auth-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            border: 1px solid #dadce0;
-            border-radius: 50%;
-            background-color: var(--white);
-            color: #3c4043;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 1px 2px rgba(60,64,67,.08);
-            text-decoration: none;
-            font-family: 'Google Sans', 'Kalpurush', sans-serif;
-            width: 36px;
-            height: 36px;
-        }
-
-        .auth-button img {
-            width: 18px;
-            height: 18px;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .user-profile img {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 1px solid #eee;
-        }
-
-        .user-name {
-            font-size: 0.9rem;
-            color: #3c4043;
-            font-weight: 500;
-        }
-
-        @media screen and (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--white);
-                padding: 0.8rem;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                flex-direction: column;
-                align-items: center;
-                gap: 0.8rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-                background: none;
-                border: none;
-                font-size: 1.3rem;
-                color: var(--text-color);
-                cursor: pointer;
-                padding: 0.3rem;
-            }
-        }
-
-        /* Mobile Menu Styles */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        @media screen and (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--white);
-                padding: 1rem;
-                box-shadow: var(--shadow);
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links a {
-                margin: 0.5rem 0;
-            }
-        }
-
-        .auth-button:hover {
-            background-color: #f8f9fa;
-            box-shadow: 0 1px 3px rgba(60,64,67,.12);
-        }
-
-        .auth-button:active {
-            background-color: #f1f3f4;
-            box-shadow: 0 1px 2px rgba(60,64,67,.3);
-        }
-
-        .auth-button span {
-            white-space: nowrap;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
     </style>
 </head>
-<body>
-    <!-- Header Section -->
-    <header>
-        <nav>
-            <div class="logo">
-                <h1>গিফট কিনবো</h1>
+<body class="text-white">
+    <!-- Header -->
+    <header class="fixed w-full bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="text-2xl font-bold font-heading text-white">DigitalMarket</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-slate-300 hover:text-white transition">Home</a>
+                    <a href="#products" class="text-slate-300 hover:text-white transition">Products</a>
+                    <a href="#features" class="text-slate-300 hover:text-white transition">Features</a>
+                    <a href="#contact" class="text-slate-300 hover:text-white transition">Contact</a>
+                    <button class="login-btn btn-primary px-6 py-2 rounded-lg">Login</button>
+                    <button class="signup-btn btn-primary px-6 py-2 rounded-lg">Sign Up</button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="menu-btn" class="md:hidden text-white">
+                    <i data-feather="menu" class="w-6 h-6"></i>
+                </button>
             </div>
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="nav-links">
-                <a href="#home">হোম</a>
-                <a href="#how-it-works">কিভাবে অর্ডার করবেন</a>
-                <a href="#trust">আমাদের সম্পর্কে</a>
-                <a href="#order">অর্ডার করুন</a>
-                <a href="#contact">যোগাযোগ</a>
-                <a href="orders.html">আমার অর্ডার</a>
-                <div class="auth-container">
-                    <button id="signInButton" class="auth-button">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-                    </button>
-                    <div id="userProfile" class="user-profile" style="display: none;">
-                        <img id="userPhoto" src="" alt="User Photo">
-                        <span id="userName" class="user-name"></span>
-                    </div>
-                </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-slate-900 border-b border-slate-800">
+            <div class="container mx-auto px-4 py-4">
+                <nav class="flex flex-col space-y-4">
+                    <a href="#" class="text-slate-300 hover:text-white transition">Home</a>
+                    <a href="#products" class="text-slate-300 hover:text-white transition">Products</a>
+                    <a href="#features" class="text-slate-300 hover:text-white transition">Features</a>
+                    <a href="#contact" class="text-slate-300 hover:text-white transition">Contact</a>
+                    <button class="login-btn btn-primary px-6 py-2 rounded-lg">Login</button>
+                    <button class="signup-btn btn-primary px-6 py-2 rounded-lg">Sign Up</button>
+                </nav>
             </div>
-        </nav>
+        </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="cod-badge">
-                <i class="fas fa-money-bill-wave"></i>
-                <span>আগে গিফট নিন, পরে টাকা দিন</span>
-            </div>
-            <h1>আপনার প্রিয়জনদের জন্য সেরা উপহার</h1>
-            <p>আমরা আপনার প্রিয়জনদের জন্য সুন্দর গিফট বক্স তৈরি করে দেই। আপনি শুধু অর্ডার করুন, বাকি কাজ আমাদের। গিফট পেয়ে তারপর টাকা দিবেন।</p>
-            <a href="#order" class="cta-button">এখনই অর্ডার করুন</a>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works">
-        <h2>কিভাবে অর্ডার করবেন</h2>
-        <div class="steps">
-            <div class="step">
-                <i class="fas fa-clipboard-list"></i>
-                <h3>1. ফর্ম পূরণ করুন</h3>
-                <p>নিচের ফর্মে আপনার নাম, ফোন নাম্বার, ঠিকানা এবং গিফট বক্সের ধরন লিখুন। ফর্ম পূরণ করা বাধ্যতামূলক</p>
-            </div>
-            <div class="step">
-                <i class="fas fa-robot"></i>
-                <h3>2. AI গিফট সিলেকশন</h3>
-                <p>আমরা আপনার দেওয়া তথ্যের ভিত্তিতে উন্নত মানের AI ব্যবহার করে পারফেক্ট গিফট সিলেক্ট করবো</p>
-            </div>
-            <div class="step">
-                <i class="fas fa-truck"></i>
-                <h3>3. গিফট পেয়ে যান</h3>
-                <p>আমরা আপনার ঠিকানায় গিফট পৌঁছে দিব। গিফট হাতে পেয়ে তারপর টাকা দিবেন</p>
+    <section class="pt-32 pb-20 px-4">
+        <div class="container mx-auto">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">আপনার ডিজিটাল প্রোডাক্ট কেনার সেরা জায়গা</h1>
+                <p class="text-xl text-slate-400 mb-8">উচ্চ মানের ডিজিটাল প্রোডাক্ট, সহজ কেনাকাটা, এবং বিশ্বস্ত সেবা</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#products" class="btn-primary px-8 py-3 rounded-lg text-center">প্রোডাক্ট দেখুন</a>
+                    <a href="#contact" class="px-8 py-3 rounded-lg border border-slate-700 hover:border-slate-600 transition text-center">যোগাযোগ করুন</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Trust Section -->
-    <section id="trust" class="trust">
-        <h2>আমাদের সম্পর্কে</h2>
-        <div class="trust-points">
-            <div class="trust-point">
-                <i class="fas fa-shield-alt"></i>
-                <h3>100% নিরাপদ</h3>
-                <p>গিফট হাতে পেয়ে তারপর টাকা দিবেন। কোন ঝুঁকি নেই</p>
+    <!-- Products Section -->
+    <section id="products" class="py-20 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">আমাদের প্রোডাক্টসমূহ</h2>
+                <p class="text-slate-400">বাংলাদেশের সেরা ডিজিটাল প্রোডাক্ট</p>
             </div>
-            <div class="trust-point">
-                <i class="fas fa-clock"></i>
-                <h3>দ্রুত ডেলিভারি</h3>
-                <p>ঢাকা শহরে 24 ঘণ্টার মধ্যে গিফট পেয়ে যাবেন</p>
-            </div>
-            <div class="trust-point">
-                <i class="fas fa-star"></i>
-                <h3>সেরা সেবা</h3>
-                <p>আমাদের গ্রাহকরা সবসময় খুশি</p>
-            </div>
-        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1 -->
+                <a href="product.html?id=ui-kit" class="product-card glass-card rounded-xl p-6 block" data-aos="fade-up">
+                    <img src="https://placehold.co/600x400/3b82f6/ffffff?text=UI+Kit" alt="UI Kit" class="w-full h-48 object-cover rounded-lg mb-6">
+                    <h3 class="font-heading text-xl font-bold text-white mb-2">Professional UI Kit</h3>
+                    <p class="text-slate-400 mb-4 text-sm">Complete design system for modern web applications.</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold font-heading text-sky-400">$49.50</span>
+                        <span class="text-sm font-medium bg-slate-700/50 px-3 py-1 rounded-full">View Details →</span>
+                    </div>
+                </a>
 
-        <div class="cod-info">
-            <h3>গিফট আগে, টাকা পরে</h3>
-            <ul>
-                <li><i class="fas fa-check-circle"></i> গিফট হাতে নিয়ে তারপরে টাকা দিবেন</li>
-                <li><i class="fas fa-check-circle"></i> আগে থেকে কোন টাকা দিতে হবে না</li>
-                <li><i class="fas fa-check-circle"></i> গিফট না পেলে টাকা দিতে হবে না</li>
-                <li><i class="fas fa-check-circle"></i> 100% নিরাপদ এবং সহজ</li>
-            </ul>
+                <!-- Product Card 2 -->
+                <a href="product.html?id=social-templates" class="product-card glass-card rounded-xl p-6 block" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://placehold.co/600x400/ec4899/ffffff?text=Templates" alt="Social Media Templates" class="w-full h-48 object-cover rounded-lg mb-6">
+                    <h3 class="font-heading text-xl font-bold text-white mb-2">Social Media Templates</h3>
+                    <p class="text-slate-400 mb-4 text-sm">200+ editable templates for Instagram, Facebook, and Twitter.</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold font-heading text-sky-400">$19.90</span>
+                        <span class="text-sm font-medium bg-slate-700/50 px-3 py-1 rounded-full">View Details →</span>
+                    </div>
+                </a>
+
+                <!-- Product Card 3 -->
+                <a href="product.html?id=3d-icons" class="product-card glass-card rounded-xl p-6 block" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://placehold.co/600x400/f59e0b/ffffff?text=3D+Icons" alt="3D Icons" class="w-full h-48 object-cover rounded-lg mb-6">
+                    <h3 class="font-heading text-xl font-bold text-white mb-2">3D Icon Pack</h3>
+                    <p class="text-slate-400 mb-4 text-sm">500+ high-quality 3D icons for your website and apps.</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold font-heading text-sky-400">$29.00</span>
+                        <span class="text-sm font-medium bg-slate-700/50 px-3 py-1 rounded-full">View Details →</span>
+                    </div>
+                </a>
+            </div>
         </div>
     </section>
 
-    <!-- Order Form Section -->
-    <section id="order" class="order-form">
-        <h2>অর্ডার করুন</h2>
-        <div class="payment-notice">
-গিফট হাতে নিয়ে টাকা দিন
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-4 bg-slate-900/50">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">আমাদের বিশেষত্ব</h2>
+                <p class="text-slate-400">কেন আমাদের সাথে কেনাকাটা করবেন</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass-card p-6 rounded-xl" data-aos="fade-up">
+                    <div class="w-12 h-12 bg-sky-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i data-feather="download" class="w-6 h-6 text-sky-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Instant Download</h3>
+                    <p class="text-slate-400">Get immediate access to your purchases after payment.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-card p-6 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-sky-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i data-feather="refresh-cw" class="w-6 h-6 text-sky-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Regular Updates</h3>
+                    <p class="text-slate-400">All products are regularly updated with new features.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card p-6 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-sky-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i data-feather="headphones" class="w-6 h-6 text-sky-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
+                    <p class="text-slate-400">Our support team is always ready to help you.</p>
+                </div>
+            </div>
         </div>
-        <form id="orderForm">
-            <div class="form-section">
-                <h3>যাকে গিফট দিবেন তার তথ্য</h3>
-                <div class="form-group">
-                    <label for="recipientName">যার জন্য গিফট</label>
-                    <input type="text" id="recipientName" name="recipientName" placeholder="যেমন: সাবরিনা আক্তার" required>
-                </div>
-                <div class="form-group">
-                    <label for="recipientPhone">মোবাইল নম্বর</label>
-                    <input type="tel" id="recipientPhone" name="recipientPhone" placeholder="যেমন: 01745897322" required>
-                </div>
-                <div class="form-group">
-                    <label for="recipientGender">জেন্ডার</label>
-                    <select id="recipientGender" name="recipientGender" required>
-                        <option value="">জেন্ডার বাছাই করুন</option>
-                        <option value="male">পুরুষ</option>
-                        <option value="female">মহিলা</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="relationship">আপনার সাথে সম্পর্ক</label>
-                    <input type="text" id="relationship" name="relationship" placeholder="যেমন: বাবা, মা, ভাই, বোন, বন্ধু, সহকর্মী" required>
-                </div>
-                <div class="form-group">
-                    <label for="recipientAge">বয়স</label>
-                    <input type="number" id="recipientAge" name="recipientAge" placeholder="যেমন: 25" required>
-                </div>
-                <div class="form-group">
-                    <label for="budget">বাজেট</label>
-                    <input type="number" id="budget" name="budget" placeholder="যেমন: 499" required>
-                </div>
-                <div class="form-group">
-                    <label for="preferences">পছন্দ-অপছন্দ</label>
-                    <textarea id="preferences" name="preferences" placeholder="যেমন: চকলেট পছন্দ করেন, ফুলের গন্ধে অ্যালার্জি আছে ইত্যাদি" rows="2"></textarea>
-                </div>
-            </div>
-
-            <div class="form-section">
-                <h3>আপনার তথ্য</h3>
-                <div class="form-group">
-                    <label for="senderName">আপনার নাম</label>
-                    <input type="text" id="senderName" name="senderName" placeholder="যেমন: সাজিদুল ইসলাম" required>
-                </div>
-                <div class="form-group">
-                    <label for="senderPhone">মোবাইল নম্বর</label>
-                    <input type="tel" id="senderPhone" name="senderPhone" placeholder="যেমন: 01745897322" required>
-                </div>
-            </div>
-
-            <div class="form-section">
-                <h3>কোথায় পাঠাবেন</h3>
-                <div class="form-group">
-                    <label for="deliveryAddress">ঠিকানা</label>
-                    <textarea id="deliveryAddress" name="deliveryAddress" placeholder="আপনার ঠিকানা বিস্তারিত ভাবে লিখুন" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="deliveryPhone">ডেলিভারি কন্টাক্ট নাম্বার</label>
-                    <input type="tel" id="deliveryPhone" name="deliveryPhone" placeholder="যেমন: 01745897322" required>
-                </div>
-            </div>
-
-            <div class="payment-info">
-                <i class="fas fa-money-bill-wave"></i>
-                <p>গিফট হাতে নিয়ে তারপরে টাকা দিবেন</p>
-            </div>
-            <button type="submit" class="submit-button">অর্ডার কনফার্ম করুন</button>
-        </form>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <h2>যোগাযোগ করুন</h2>
-        <div class="contact-info">
-            <div class="contact-item">
-                <i class="fas fa-phone"></i>
-                <h3>ফোন</h3>
-                <p>01745897322</p>
+    <section id="contact" class="py-20 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">যোগাযোগ করুন</h2>
+                <p class="text-slate-400">আমাদের সাথে যোগাযোগ করুন</p>
             </div>
-            <div class="contact-item">
-                <i class="fas fa-envelope"></i>
-                <h3>ইমেইল</h3>
-                <p><a href="mailto:giftkinbobd@gmail.com" style="color: var(--primary-color); text-decoration: none;">giftkinbobd@gmail.com</a></p>
-            </div>
-            <div class="contact-item">
-                <i class="fab fa-facebook"></i>
-                <h3>ফেসবুক পেজ</h3>
-                <p><a href="https://facebook.com/giftkinbobd" target="_blank" style="color: var(--primary-color); text-decoration: none;">facebook.com/giftkinbobd</a></p>
+            <div class="max-w-2xl mx-auto">
+                <form class="glass-card p-8 rounded-xl" data-aos="fade-up">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Name</label>
+                        <input type="text" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Message</label>
+                        <textarea rows="4" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full py-3 rounded-lg">Send Message</button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 গিফট কিনবো। সর্বস্বত্ব সংরক্ষিত।</p>
-        <a href="admin.html" style="color: var(--primary-color); text-decoration: none; margin-top: 0.5rem; display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--primary-color); border-radius: 4px; transition: all 0.3s ease;">
-            <i class="fas fa-user-shield"></i> অ্যাডমিন প্যানেল
-        </a>
+    <footer class="py-12 px-4 border-t border-slate-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">ডিজিটাল মার্কেট</h3>
+                    <p class="text-slate-400">বাংলাদেশের সেরা ডিজিটাল মার্কেটপ্লেস</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">দ্রুত লিংক</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">হোম</a></li>
+                        <li><a href="#products" class="text-slate-400 hover:text-white transition">প্রোডাক্ট</a></li>
+                        <li><a href="#features" class="text-slate-400 hover:text-white transition">বৈশিষ্ট্য</a></li>
+                        <li><a href="#contact" class="text-slate-400 hover:text-white transition">যোগাযোগ</a></li>
+                        <li><a href="admin.html" class="text-slate-400 hover:text-white transition">অ্যাডমিন প্যানেল</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">UI Kits</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Templates</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Icons</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Fonts</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Newsletter</h4>
+                    <p class="text-slate-400 mb-4">Subscribe to get updates on new products.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-2 rounded-l-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
+                        <button type="submit" class="btn-primary px-4 py-2 rounded-r-lg">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-400">
+                <p>&copy; ২০২৪ ডিজিটাল মার্কেট। সর্বস্বত্ব সংরক্ষিত।</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
-        import { getDatabase, ref, push, set, get } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden fixed inset-0 bg-black/50 z-50">
+        <div class="container mx-auto px-4 h-full flex items-center justify-center">
+            <div class="glass-card p-8 rounded-xl max-w-md w-full">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Login</h3>
+                    <button id="closeLoginModal" class="text-slate-400 hover:text-white">
+                        <i data-feather="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <form id="loginForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Password</label>
+                        <input type="password" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
+                    </div>
+                    <div id="loginErrorMessage" class="error-message hidden mb-4">
+                        <i data-feather="alert-circle" class="w-5 h-5"></i>
+                        <span id="loginErrorText"></span>
+                    </div>
+                    <div id="loginSuccessMessage" class="success-message hidden mb-4">
+                        <i data-feather="check-circle" class="w-5 h-5"></i>
+                        <span id="loginSuccessText"></span>
+                    </div>
+                    <button type="submit" class="w-full btn-primary text-white font-semibold py-3 px-8 rounded-lg">
+                        Login
+                    </button>
+                </form>
+                <p class="mt-4 text-center text-slate-400">
+                    Don't have an account? 
+                    <a href="#" class="text-sky-400 hover:text-sky-300" id="showSignupLink">Sign Up</a>
+                </p>
+            </div>
+        </div>
+    </div>
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCSyXJeftEfkwQ_FoQlg1sEZ3PZv9xjkLI",
-            authDomain: "gift-kinbo-bd.firebaseapp.com",
-            projectId: "gift-kinbo-bd",
-            storageBucket: "gift-kinbo-bd.firebasestorage.app",
-            messagingSenderId: "896761493540",
-            appId: "1:896761493540:web:21e49df2ca453fb80180b1",
-            measurementId: "G-ZVXSHQT95M",
-            databaseURL: "https://gift-kinbo-bd-default-rtdb.asia-southeast1.firebasedatabase.app"
-        };
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal hidden fixed inset-0 bg-black/50 z-50">
+        <div class="container mx-auto px-4 h-full flex items-center justify-center">
+            <div class="glass-card p-8 rounded-xl max-w-md w-full">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Sign Up</h3>
+                    <button id="closeSignupModal" class="text-slate-400 hover:text-white">
+                        <i data-feather="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <form id="signupForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Name</label>
+                        <input type="text" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Password</label>
+                        <input type="password" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition">
+                    </div>
+                    <div id="errorMessage" class="error-message hidden mb-4">
+                        <i data-feather="alert-circle" class="w-5 h-5"></i>
+                        <span id="errorText"></span>
+                    </div>
+                    <div id="successMessage" class="success-message hidden mb-4">
+                        <i data-feather="check-circle" class="w-5 h-5"></i>
+                        <span id="successText"></span>
+                    </div>
+                    <button type="submit" class="w-full btn-primary text-white font-semibold py-3 px-8 rounded-lg">
+                        Create Account
+                    </button>
+                </form>
+                <p class="mt-4 text-center text-slate-400">
+                    Already have an account? 
+                    <a href="#" class="text-sky-400 hover:text-sky-300" id="showLoginLink">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
 
-        // Initialize Firebase
-        let app;
-        let database;
-        let auth;
-        let provider;
-
-        try {
-            app = initializeApp(firebaseConfig);
-            console.log('Firebase app initialized successfully');
-            
-            database = getDatabase(app);
-            console.log('Database initialized successfully');
-            
-            auth = getAuth(app);
-            console.log('Auth initialized successfully');
-            
-            provider = new GoogleAuthProvider();
-            console.log('Google provider initialized successfully');
-
-            // Test database connection
-            const testRef = ref(database, 'test');
-            set(testRef, { timestamp: new Date().toISOString() })
-                .then(() => console.log('Database connection test successful'))
-                .catch(error => console.error('Database connection test failed:', error));
-
-        } catch (error) {
-            console.error('Firebase initialization error:', error);
-        }
-
-        // Auth state observer
-        onAuthStateChanged(auth, (user) => {
-            const signInButton = document.getElementById('signInButton');
-            const userProfile = document.getElementById('userProfile');
-            const userPhoto = document.getElementById('userPhoto');
-            const userName = document.getElementById('userName');
-
-            if (user) {
-                console.log('User is signed in:', user.email);
-                signInButton.style.display = 'none';
-                userProfile.style.display = 'flex';
-                userPhoto.src = user.photoURL;
-                userName.textContent = user.displayName;
-            } else {
-                console.log('User is signed out');
-                signInButton.style.display = 'flex';
-                userProfile.style.display = 'none';
-            }
+    <!-- JavaScript -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
         });
 
-        // Sign in with Google
-        document.getElementById('signInButton').addEventListener('click', async () => {
-            try {
-                const result = await signInWithPopup(auth, provider);
-                console.log('Successfully signed in:', result.user.email);
-            } catch (error) {
-                console.error('Error signing in:', error);
-                alert('দুঃখিত, সাইন ইন করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
-            }
-        });
+        // Initialize Feather Icons
+        feather.replace();
 
-        // Sign out
-        document.getElementById('userProfile').addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-                console.log('Successfully signed out');
-            } catch (error) {
-                console.error('Error signing out:', error);
-                alert('দুঃখিত, সাইন আউট করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
-            }
-        });
+        // API Base URL
+        const API_BASE_URL = 'http://localhost:3000/api';
 
         // Mobile Menu Toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            const orderForm = document.getElementById('orderForm');
+        const mobileMenuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-            // Mobile menu functionality
-            mobileMenuBtn.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-            });
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-            document.addEventListener('click', function(event) {
-                if (!event.target.closest('nav')) {
-                    navLinks.classList.remove('active');
-                }
-            });
-
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
+        // Load Products
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/products`);
+                const products = await response.json();
+                
+                const productsGrid = document.getElementById('productsGrid');
+                productsGrid.innerHTML = '';
+                
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'glass-card p-6 rounded-xl hover:scale-105 transition-transform duration-300';
+                    productCard.innerHTML = `
+                        <div class="relative mb-6">
+                            <img src="${product.image}" alt="${product.title}" class="w-full h-48 object-cover rounded-lg">
+                            <div class="absolute top-4 right-4 bg-sky-500/90 text-white px-3 py-1 rounded-full text-sm">
+                                ${product.rating} ⭐
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">${product.title}</h3>
+                        <p class="text-slate-300 mb-4">${product.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-sky-400">৳${product.price}</span>
+                            <a href="product.html?id=${product._id}" class="btn-primary px-6 py-2 rounded-lg">
+                                বিস্তারিত দেখুন
+                            </a>
+                        </div>
+                    `;
+                    productsGrid.appendChild(productCard);
                 });
-            });
+            } catch (error) {
+                console.error('Error loading products:', error);
+                alert('প্রোডাক্ট লোড করতে সমস্যা হয়েছে।');
+            }
+        }
 
-            // Form submission handling
-            orderForm.addEventListener('submit', async function(e) {
+        // Initial Load
+        loadProducts();
+
+        // Modal Functionality
+        function showModal(modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function hideModal(modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Login Modal
+        const loginModal = document.getElementById('loginModal');
+        const loginForm = document.getElementById('loginForm');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const loginLinks = document.querySelectorAll('.login-btn');
+        const showSignupLink = document.getElementById('showSignupLink');
+
+        loginLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                console.log('Form submission started');
-
-                // Check if user is signed in
-                if (!auth.currentUser) {
-                    alert('অনুগ্রহ করে প্রথমে সাইন ইন করুন।');
-                    return;
-                }
-
-                // Show loading state
-                const submitButton = orderForm.querySelector('.submit-button');
-                const originalButtonText = submitButton.textContent;
-                submitButton.textContent = 'অর্ডার সাবমিট হচ্ছে...';
-                submitButton.disabled = true;
-
-                try {
-                    console.log('Getting form data...');
-                    // Get form data
-                    const formData = {
-                        recipientName: document.getElementById('recipientName').value,
-                        recipientPhone: document.getElementById('recipientPhone').value,
-                        recipientGender: document.getElementById('recipientGender').value,
-                        relationship: document.getElementById('relationship').value,
-                        recipientAge: document.getElementById('recipientAge').value,
-                        budget: document.getElementById('budget').value,
-                        preferences: document.getElementById('preferences').value,
-                        senderName: document.getElementById('senderName').value,
-                        senderPhone: document.getElementById('senderPhone').value,
-                        deliveryAddress: document.getElementById('deliveryAddress').value,
-                        deliveryPhone: document.getElementById('deliveryPhone').value,
-                        orderDate: new Date().toISOString(),
-                        status: 'pending',
-                        userId: auth.currentUser.uid,
-                        userEmail: auth.currentUser.email
-                    };
-
-                    console.log('Form data collected:', formData);
-
-                    // Create a new order reference
-                    const ordersRef = ref(database, 'orders');
-                    console.log('Database reference created');
-
-                    const newOrderRef = push(ordersRef);
-                    console.log('New order reference created:', newOrderRef.key);
-                    
-                    // Save the order data
-                    await set(newOrderRef, formData);
-                    console.log('Data saved successfully');
-
-                    // Show success message
-                    alert('আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে। আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।');
-                    
-                    // Reset form
-                    orderForm.reset();
-                    console.log('Form reset completed');
-
-                } catch (error) {
-                    console.error('Error details:', error);
-                    console.error('Error code:', error.code);
-                    console.error('Error message:', error.message);
-                    alert('দুঃখিত, একটি ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
-                } finally {
-                    // Reset button state
-                    submitButton.textContent = originalButtonText;
-                    submitButton.disabled = false;
-                    console.log('Button state reset');
-                }
+                showModal(loginModal);
             });
+        });
+
+        closeLoginModal.addEventListener('click', () => hideModal(loginModal));
+        showSignupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideModal(loginModal);
+            showModal(signupModal);
+        });
+
+        // Sign Up Modal
+        const signupModal = document.getElementById('signupModal');
+        const signupForm = document.getElementById('signupForm');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const signupLinks = document.querySelectorAll('.signup-btn');
+        const showLoginLink = document.getElementById('showLoginLink');
+
+        signupLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showModal(signupModal);
+            });
+        });
+
+        closeSignupModal.addEventListener('click', () => hideModal(signupModal));
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideModal(signupModal);
+            showModal(loginModal);
+        });
+
+        // Form Submissions
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your login logic here
+            console.log('Login form submitted');
+        });
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your signup logic here
+            console.log('Signup form submitted');
         });
     </script>
 </body>
-</html> 
+</html>
